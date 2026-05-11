@@ -6,6 +6,29 @@
   <title>La Clave Hostel | ERP Operativo Integral</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Firebase -->
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+    import { getFirestore, collection, addDoc, getDocs } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCFoHw2Wq85L0Sjwtj2Bj_Chk8bTkYuT9o",
+      authDomain: "studio-8186942404-f0682.firebaseapp.com",
+      projectId: "studio-8186942404-f0682",
+      storageBucket: "studio-8186942404-f0682.firebasestorage.app",
+      messagingSenderId: "921370572288",
+      appId: "1:921370572288:web:00d816663ac9ed64700ae5"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    window.db = db;
+    window.collection = collection;
+    window.addDoc = addDoc;
+    window.getDocs = getDocs;
+  </script>
 </head>
 <body class="bg-gray-100 min-h-screen text-gray-800 relative">
 
@@ -191,31 +214,43 @@
 </div>
 
 <script>
-let reservas = JSON.parse(localStorage.getItem('reservas')) || [];
-let facturas = JSON.parse(localStorage.getItem('facturas')) || [];
+let reservas = [];
+let facturas = [];
 
 function showModule(id) {
   document.querySelectorAll('.module').forEach(section => section.classList.add('hidden'));
   document.getElementById(id).classList.remove('hidden');
 }
 
-function guardarReserva() {
+async function guardarReserva() {
   const reserva = {
     cliente: document.getElementById('cliente').value,
     documento: document.getElementById('documento').value,
     contacto: document.getElementById('contacto').value,
     habitacion: document.getElementById('habitacion').value,
+    checkin: document.getElementById('checkin').value,
+    checkout: document.getElementById('checkout').value,
     plataforma: document.getElementById('plataforma').value,
     valor: document.getElementById('valor').value,
     metodo: document.getElementById('metodo').value,
+    fechaRegistro: new Date().toISOString()
   };
+
+  try {
+    await window.addDoc(window.collection(window.db, 'reservas'), reserva);
+    cargarReservas();
+    alert('Reserva guardada correctamente en Firebase');
+  } catch (error) {
+    console.error('Error guardando reserva:', error);
+  }
+};
 
   reservas.push(reserva);
   localStorage.setItem('reservas', JSON.stringify(reservas));
-  renderReservas();
-renderFacturas();
+  cargarReservas();
+cargarFacturas();
 
-function exportarSIIGO() {
+async function exportarSIIGO() {
   const factura = {
     nombre: document.getElementById('fact_nombre').value,
     documento: document.getElementById('fact_documento').value,
@@ -225,12 +260,29 @@ function exportarSIIGO() {
     valor: document.getElementById('fact_valor').value,
     metodo: document.getElementById('fact_metodo').value,
     estado: document.getElementById('fact_estado').value,
-    fecha: new Date().toLocaleDateString()
+    fecha: new Date().toISOString()
   };
+
+  try {
+    await window.addDoc(window.collection(window.db, 'facturas'), factura);
+    cargarFacturas();
+
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(factura, null, 2));
+    const downloadAnchorNode = document.createElement('a');
+    downloadAnchorNode.setAttribute('href', dataStr);
+    downloadAnchorNode.setAttribute('download', `factura_siigo_${factura.nombre}.json`);
+    document.body.appendChild(downloadAnchorNode);
+    downloadAnchorNode.click();
+    downloadAnchorNode.remove();
+
+  } catch (error) {
+    console.error('Error guardando factura:', error);
+  }
+};
 
   facturas.push(factura);
   localStorage.setItem('facturas', JSON.stringify(facturas));
-  renderFacturas();
+  cargarFacturas();
 
   const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(factura, null, 2));
   const downloadAnchorNode = document.createElement('a');
@@ -241,7 +293,13 @@ function exportarSIIGO() {
   downloadAnchorNode.remove();
 }
 
-function renderFacturas() {
+async function cargarFacturas() {
+  facturas = [];
+  const querySnapshot = await window.getDocs(window.collection(window.db, 'facturas'));
+  querySnapshot.forEach((doc) => {
+    facturas.push(doc.data());
+  });
+
   const tabla = document.getElementById('tablaFacturas');
   if (!tabla) return;
   tabla.innerHTML = '';
@@ -256,16 +314,38 @@ function renderFacturas() {
       </tr>
     `;
   });
+}</td>
+        <td>${f.concepto}</td>
+        <td>$${f.valor}</td>
+        <td>${f.estado}</td>
+      </tr>
+    `;
+  });
 }
 }
 
-function renderReservas() {
+async function cargarReservas() {
+  reservas = [];
+  const querySnapshot = await window.getDocs(window.collection(window.db, 'reservas'));
+  querySnapshot.forEach((doc) => {
+    reservas.push(doc.data());
+  });
+
   const tabla = document.getElementById('tablaReservas');
   tabla.innerHTML = '';
+
   reservas.forEach(r => {
     tabla.innerHTML += `
       <tr class="border-b">
         <td class="p-2">${r.cliente}</td>
+        <td>${r.plataforma}</td>
+        <td>${r.habitacion}</td>
+        <td>$${r.valor}</td>
+        <td>${r.metodo}</td>
+      </tr>
+    `;
+  });
+}</td>
         <td>${r.plataforma}</td>
         <td>${r.habitacion}</td>
         <td>$${r.valor}</td>
