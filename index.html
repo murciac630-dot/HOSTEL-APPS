@@ -1,256 +1,41 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>La Clave Hostel | ERP Operativo Integral</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-  <!-- Firebase -->
-  <script type="module">
-    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
-    import { getFirestore, collection, addDoc, getDocs } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyCFoHw2Wq85L0Sjwtj2Bj_Chk8bTkYuT9o",
-      authDomain: "studio-8186942404-f0682.firebaseapp.com",
-      projectId: "studio-8186942404-f0682",
-      storageBucket: "studio-8186942404-f0682.firebasestorage.app",
-      messagingSenderId: "921370572288",
-      appId: "1:921370572288:web:00d816663ac9ed64700ae5"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    window.db = db;
-    window.collection = collection;
-    window.addDoc = addDoc;
-    window.getDocs = getDocs;
-  </script>
-</head>
-<body class="bg-gray-100 min-h-screen text-gray-800 relative">
-
-<!-- Fondo con logo corporativo -->
-<div class="fixed inset-0 flex items-center justify-center pointer-events-none opacity-5 z-0">
-  <img src="/mnt/data/LC Logo IG-FB ProfilePic.png" alt="La Clave Hostel Logo" class="max-w-3xl w-2/3 object-contain">
-</div>
-
-<div class="flex relative z-10">
-  <!-- Sidebar -->
-  <aside class="w-72 bg-black/95 backdrop-blur-md text-white min-h-screen p-6 space-y-4 shadow-2xl">
-    <div class="flex flex-col items-center mb-4">
-      <img src="/mnt/data/LC Logo IG-FB ProfilePic.png" alt="Logo La Clave Hostel" class="w-32 mb-3 rounded-xl shadow-lg">
-    </div>
-    <div class="text-2xl font-bold border-b pb-4">La Clave Hostel ERP</div>
-    <nav class="space-y-3">
-      <button onclick="showModule('reservas')" class="w-full text-left hover:text-yellow-400">1. Caja & Reservas</button>
-      <button onclick="showModule('inventario')" class="w-full text-left hover:text-yellow-400">2. Inventario</button>
-      <button onclick="showModule('gastos')" class="w-full text-left hover:text-yellow-400">3. Gastos Operativos</button>
-      <button onclick="showModule('facturacion')" class="w-full text-left hover:text-yellow-400">4. Facturación SIIGO</button>
-      <button onclick="showModule('dashboard')" class="w-full text-left hover:text-yellow-400">5. Dashboard Financiero</button>
-      <button onclick="showModule('reportes')" class="w-full text-left hover:text-yellow-400">6. Reportes Mensuales</button>
-      <button onclick="showModule('staff')" class="w-full text-left hover:text-yellow-400">7. Staff & Voluntarios</button>
-      <button onclick="showModule('checkin')" class="w-full text-left hover:text-yellow-400">8. Check-In Digital</button>
-    </nav>
-  </aside>
-
-  <!-- Main Content -->
-  <main class="flex-1 p-8 relative">
-
-    <!-- RESERVAS -->
-    <section id="reservas" class="module">
-      <h1 class="text-3xl font-bold mb-6">Registro Diario de Caja y Reservas</h1>
-      <div class="bg-white/95 backdrop-blur-sm p-6 rounded-2xl shadow-md mb-6 grid md:grid-cols-3 gap-4">
-        <input id="cliente" placeholder="Nombre Cliente" class="border p-2 rounded">
-        <input id="documento" placeholder="Documento" class="border p-2 rounded">
-        <input id="contacto" placeholder="Contacto" class="border p-2 rounded">
-        <input id="habitacion" placeholder="Habitación" class="border p-2 rounded">
-        <input id="checkin" type="date" class="border p-2 rounded">
-        <input id="checkout" type="date" class="border p-2 rounded">
-        <select id="plataforma" class="border p-2 rounded">
-          <option>Booking</option>
-          <option>Airbnb</option>
-          <option>Hostelworld</option>
-          <option>Directa</option>
-          <option>Walk-in</option>
-        </select>
-        <input id="valor" type="number" placeholder="Valor Pagado" class="border p-2 rounded">
-        <select id="metodo" class="border p-2 rounded">
-          <option>Efectivo</option>
-          <option>Transferencia</option>
-          <option>Tarjeta</option>
-        </select>
-        <button onclick="guardarReserva()" class="bg-black text-white rounded p-3 hover:bg-gray-800">Guardar Registro</button>
-      </div>
-
-      <table class="w-full bg-white rounded-xl shadow overflow-hidden">
-        <thead class="bg-black text-white">
-          <tr>
-            <th class="p-3">Cliente</th>
-            <th>Plataforma</th>
-            <th>Habitación</th>
-            <th>Valor</th>
-            <th>Método</th>
-          </tr>
-        </thead>
-        <tbody id="tablaReservas"></tbody>
-      </table>
-    </section>
-
-    <!-- INVENTARIO -->
-    <section id="inventario" class="module hidden">
-      <h1 class="text-3xl font-bold mb-6">Control de Inventario</h1>
-      <div class="bg-white/95 backdrop-blur-sm p-6 rounded-2xl shadow-md space-y-4">
-        <p>Control de bar, recepción, lavandería, limpieza y consumibles.</p>
-        <ul class="list-disc ml-6">
-          <li>Ingreso de productos</li>
-          <li>Salida por consumo o venta</li>
-          <li>Alertas de stock bajo</li>
-          <li>Kardex automatizado</li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- GASTOS -->
-    <section id="gastos" class="module hidden">
-      <h1 class="text-3xl font-bold mb-6">Gastos Operativos Diarios</h1>
-      <div class="bg-white/95 backdrop-blur-sm p-6 rounded-2xl shadow-md">
-        <p>Registro de compras, mantenimiento, nómina, servicios, suministros y gastos menores.</p>
-      </div>
-    </section>
-
-    <!-- FACTURACION -->
-    <section id="facturacion" class="module hidden">
-      <h1 class="text-3xl font-bold mb-6">Facturación Electrónica SIIGO</h1>
-      <div class="bg-white/95 backdrop-blur-sm p-6 rounded-2xl shadow-md space-y-6">
-        <h2 class="text-xl font-semibold">Generar Factura para Reserva</h2>
-        <div class="grid md:grid-cols-2 gap-4">
-          <input id="fact_nombre" placeholder="Nombre Cliente" class="border p-2 rounded">
-          <input id="fact_documento" placeholder="Documento Cliente" class="border p-2 rounded">
-          <input id="fact_correo" placeholder="Correo Cliente" class="border p-2 rounded">
-          <input id="fact_telefono" placeholder="Teléfono Cliente" class="border p-2 rounded">
-          <input id="fact_concepto" placeholder="Concepto Factura (Hospedaje, Bar, Tour...)" class="border p-2 rounded">
-          <input id="fact_valor" type="number" placeholder="Valor Total" class="border p-2 rounded">
-          <select id="fact_metodo" class="border p-2 rounded">
-            <option>Efectivo</option>
-            <option>Transferencia</option>
-            <option>Tarjeta</option>
-          </select>
-          <select id="fact_estado" class="border p-2 rounded">
-            <option>Pendiente</option>
-            <option>Facturada</option>
-            <option>Anulada</option>
-          </select>
-        </div>
-
-        <div class="flex flex-wrap gap-4">
-          <button onclick="exportarSIIGO()" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
-            Exportar Datos SIIGO
-          </button>
-          <a href="https://siigo.com" target="_blank" class="inline-block bg-black text-white px-4 py-2 rounded hover:bg-gray-800">
-            Abrir SIIGO
-          </a>
-        </div>
-
-        <div>
-          <h3 class="text-lg font-semibold mb-2">Historial de Facturación</h3>
-          <table class="w-full border rounded overflow-hidden">
-            <thead class="bg-gray-800 text-white">
-              <tr>
-                <th class="p-2">Cliente</th>
-                <th>Concepto</th>
-                <th>Valor</th>
-                <th>Estado</th>
-              </tr>
-            </thead>
-            <tbody id="tablaFacturas"></tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-
-    <!-- DASHBOARD -->
-    <section id="dashboard" class="module hidden">
-      <h1 class="text-3xl font-bold mb-6">Dashboard Financiero</h1>
-      <div class="bg-white/95 backdrop-blur-sm p-6 rounded-2xl shadow-md">
-        <canvas id="financeChart"></canvas>
-      </div>
-    </section>
-
-    <!-- REPORTES -->
-    <section id="reportes" class="module hidden">
-      <h1 class="text-3xl font-bold mb-6">Reportes Mensuales</h1>
-      <div class="bg-white/95 backdrop-blur-sm p-6 rounded-2xl shadow-md">
-        <p>KPIs:</p>
-        <ul class="list-disc ml-6">
-          <li>Ocupación</li>
-          <li>ADR</li>
-          <li>RevPAR</li>
-          <li>Ingresos por canal</li>
-          <li>Errores de caja</li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- STAFF -->
-    <section id="staff" class="module hidden">
-      <h1 class="text-3xl font-bold mb-6">Gestión de Staff y Voluntarios</h1>
-      <div class="bg-white/95 backdrop-blur-sm p-6 rounded-2xl shadow-md">
-        <p>Horarios, tareas, desempeño, cumplimiento y control de responsabilidades.</p>
-      </div>
-    </section>
-
-    <!-- CHECKIN -->
-    <section id="checkin" class="module hidden">
-      <h1 class="text-3xl font-bold mb-6">Check-In Digital</h1>
-      <div class="bg-white/95 backdrop-blur-sm p-6 rounded-2xl shadow-md">
-        <p>Formulario de ingreso conectado a Google Forms/AppSheet para automatizar recepción.</p>
-      </div>
-    </section>
-
-  </main>
-</div>
-
 <script>
-let reservas = [];
-let facturas = [];
+// Inicialización de datos con validación
+let reservas = JSON.parse(localStorage.getItem('reservas')) || [];
+let facturas = JSON.parse(localStorage.getItem('facturas')) || [];
 
+// 1. Función para cambiar de módulos (Navegación)
 function showModule(id) {
   document.querySelectorAll('.module').forEach(section => section.classList.add('hidden'));
-  document.getElementById(id).classList.remove('hidden');
+  const target = document.getElementById(id);
+  if (target) {
+    target.classList.remove('hidden');
+  }
 }
 
-async function guardarReserva() {
+// 2. Función para guardar reservas
+function guardarReserva() {
   const reserva = {
     cliente: document.getElementById('cliente').value,
     documento: document.getElementById('documento').value,
     contacto: document.getElementById('contacto').value,
     habitacion: document.getElementById('habitacion').value,
-    checkin: document.getElementById('checkin').value,
-    checkout: document.getElementById('checkout').value,
     plataforma: document.getElementById('plataforma').value,
     valor: document.getElementById('valor').value,
     metodo: document.getElementById('metodo').value,
-    fechaRegistro: new Date().toISOString()
   };
 
-  try {
-    await window.addDoc(window.collection(window.db, 'reservas'), reserva);
-    cargarReservas();
-    alert('Reserva guardada correctamente en Firebase');
-  } catch (error) {
-    console.error('Error guardando reserva:', error);
-  }
-};
+  if (!reserva.cliente) return alert("Por favor ingresa al menos el nombre del cliente");
 
   reservas.push(reserva);
   localStorage.setItem('reservas', JSON.stringify(reservas));
-  cargarReservas();
-cargarFacturas();
+  renderReservas();
+  
+  // Limpiar campos
+  document.querySelectorAll('#reservas input').forEach(i => i.value = '');
+} // <-- AQUÍ FALTABA ESTE CIERRE
 
-async function exportarSIIGO() {
+// 3. Función para exportar a SIIGO
+function exportarSIIGO() {
   const factura = {
     nombre: document.getElementById('fact_nombre').value,
     documento: document.getElementById('fact_documento').value,
@@ -260,29 +45,14 @@ async function exportarSIIGO() {
     valor: document.getElementById('fact_valor').value,
     metodo: document.getElementById('fact_metodo').value,
     estado: document.getElementById('fact_estado').value,
-    fecha: new Date().toISOString()
+    fecha: new Date().toLocaleDateString()
   };
 
-  try {
-    await window.addDoc(window.collection(window.db, 'facturas'), factura);
-    cargarFacturas();
-
-    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(factura, null, 2));
-    const downloadAnchorNode = document.createElement('a');
-    downloadAnchorNode.setAttribute('href', dataStr);
-    downloadAnchorNode.setAttribute('download', `factura_siigo_${factura.nombre}.json`);
-    document.body.appendChild(downloadAnchorNode);
-    downloadAnchorNode.click();
-    downloadAnchorNode.remove();
-
-  } catch (error) {
-    console.error('Error guardando factura:', error);
-  }
-};
+  if (!factura.nombre) return alert("Ingresa el nombre para la factura");
 
   facturas.push(factura);
   localStorage.setItem('facturas', JSON.stringify(facturas));
-  cargarFacturas();
+  renderFacturas();
 
   const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(factura, null, 2));
   const downloadAnchorNode = document.createElement('a');
@@ -293,13 +63,8 @@ async function exportarSIIGO() {
   downloadAnchorNode.remove();
 }
 
-async function cargarFacturas() {
-  facturas = [];
-  const querySnapshot = await window.getDocs(window.collection(window.db, 'facturas'));
-  querySnapshot.forEach((doc) => {
-    facturas.push(doc.data());
-  });
-
+// 4. Funciones de Renderizado (Dibujar tablas)
+function renderFacturas() {
   const tabla = document.getElementById('tablaFacturas');
   if (!tabla) return;
   tabla.innerHTML = '';
@@ -310,30 +75,16 @@ async function cargarFacturas() {
         <td class="p-2">${f.nombre}</td>
         <td>${f.concepto}</td>
         <td>$${f.valor}</td>
-        <td>${f.estado}</td>
-      </tr>
-    `;
-  });
-}</td>
-        <td>${f.concepto}</td>
-        <td>$${f.valor}</td>
-        <td>${f.estado}</td>
+        <td><span class="px-2 py-1 rounded text-xs ${f.estado === 'Facturada' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}">${f.estado}</span></td>
       </tr>
     `;
   });
 }
-}
 
-async function cargarReservas() {
-  reservas = [];
-  const querySnapshot = await window.getDocs(window.collection(window.db, 'reservas'));
-  querySnapshot.forEach((doc) => {
-    reservas.push(doc.data());
-  });
-
+function renderReservas() {
   const tabla = document.getElementById('tablaReservas');
+  if (!tabla) return;
   tabla.innerHTML = '';
-
   reservas.forEach(r => {
     tabla.innerHTML += `
       <tr class="border-b">
@@ -345,32 +96,26 @@ async function cargarReservas() {
       </tr>
     `;
   });
-}</td>
-        <td>${r.plataforma}</td>
-        <td>${r.habitacion}</td>
-        <td>$${r.valor}</td>
-        <td>${r.metodo}</td>
-      </tr>
-    `;
-  });
 }
 
-renderReservas();
+// 5. Inicialización de Gráficos y Tablas al cargar
+window.onload = () => {
+  renderReservas();
+  renderFacturas();
 
-const ctx = document.getElementById('financeChart');
-if (ctx) {
-  new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: ['Reservas', 'Bar', 'Gastos'],
-      datasets: [{
-        label: 'Flujo Financiero',
-        data: [1200, 450, 600]
-      }]
-    }
-  });
-}
+  const ctx = document.getElementById('financeChart');
+  if (ctx) {
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Reservas', 'Bar', 'Gastos'],
+        datasets: [{
+          label: 'Flujo Financiero (COP)',
+          data: [1200000, 450000, 600000], // Datos de ejemplo
+          backgroundColor: ['#fbbf24', '#000000', '#ef4444']
+        }]
+      }
+    });
+  }
+};
 </script>
-
-</body>
-</html>
