@@ -3,18 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>La Clave Hostel | ERP Profesional</title>
+  <title>La Clave Hostel | ERP Full Operativo</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     .module { transition: all 0.3s ease; }
     .hidden { display: none !important; }
-    input, select, textarea { border: 1px solid #d1d5db; padding: 0.5rem; border-radius: 0.375rem; width: 100%; font-size: 0.875rem; }
-    .bg-logo {
-      fixed inset-0 flex items-center justify-center pointer-events-none opacity-5 z-0;
-    }
+    input, select, textarea { border: 1px solid #d1d5db; padding: 0.6rem; border-radius: 0.5rem; width: 100%; outline: none; }
+    input:focus { border-color: #000; }
   </style>
 </head>
-<body class="bg-gray-100 min-h-screen text-gray-800">
+<body class="bg-gray-100 min-h-screen text-gray-800 font-sans">
 
 <div class="fixed inset-0 flex items-center justify-center pointer-events-none opacity-5 z-0">
   <img src="LC Logo IG-FB ProfilePic.png" alt="" class="max-w-2xl w-2/3 object-contain">
@@ -22,71 +20,58 @@
 
 <div class="flex relative z-10">
   <aside class="w-64 bg-black text-white min-h-screen p-6 fixed shadow-2xl overflow-y-auto">
-    <img src="LC Logo IG-FB ProfilePic.png" alt="Logo" class="w-32 mx-auto mb-6 rounded-lg border border-gray-800">
-    <div class="text-xl font-bold border-b border-gray-700 pb-4 mb-6 text-center">La Clave ERP</div>
+    <img src="LC Logo IG-FB ProfilePic.png" alt="Logo La Clave" class="w-32 mx-auto mb-6 rounded-lg border border-gray-800 bg-white/10 p-2">
     <nav class="space-y-1">
-      <button onclick="showModule('caja-menor')" class="w-full text-left p-3 hover:bg-gray-800 rounded transition">💰 Caja Menor</button>
-      <button onclick="showModule('reservas')" class="w-full text-left p-3 hover:bg-gray-800 rounded transition">📅 Reservas</button>
-      <button onclick="showModule('inventario')" class="w-full text-left p-3 hover:bg-gray-800 rounded transition">📦 Inventario</button>
-      <button onclick="showModule('gastos')" class="w-full text-left p-3 hover:bg-gray-800 rounded transition">💸 Gastos Operativos</button>
-      <button onclick="showModule('staff')" class="w-full text-left p-3 hover:bg-gray-800 rounded transition">👥 Staff</button>
-      <button onclick="showModule('checkin')" class="w-full text-left p-3 hover:bg-gray-800 rounded transition">📝 Check-In</button>
+      <button onclick="showModule('caja-menor')" class="w-full text-left p-3 hover:bg-gray-800 rounded transition text-sm">💰 Caja Menor</button>
+      <button onclick="showModule('reservas')" class="w-full text-left p-3 hover:bg-gray-800 rounded transition text-sm">📅 Reservas</button>
+      <button onclick="showModule('inventario')" class="w-full text-left p-3 hover:bg-gray-800 rounded transition text-sm">📦 Inventario</button>
+      <button onclick="showModule('gastos')" class="w-full text-left p-3 hover:bg-gray-800 rounded transition text-sm">💸 Gastos Operativos</button>
+      <button onclick="showModule('staff')" class="w-full text-left p-3 hover:bg-gray-800 rounded transition text-sm">👥 Staff & Voluntarios</button>
+      <button onclick="showModule('checkin')" class="w-full text-left p-3 hover:bg-gray-800 rounded transition text-sm">📝 Check-In Digital</button>
     </nav>
   </aside>
 
   <main class="ml-64 flex-1 p-8">
 
     <section id="caja-menor" class="module">
-      <div class="flex justify-between items-center mb-6">
-        <h1 class="text-3xl font-bold">Manejo de Caja Menor</h1>
-        <button onclick="generarCuadre()" class="bg-blue-600 text-white px-4 py-2 rounded-lg font-bold hover:bg-blue-700 shadow-lg">⚡ Generar Cuadre de Caja</button>
+      <div class="flex justify-between items-center mb-8">
+        <h1 class="text-3xl font-extrabold tracking-tight">Caja Menor</h1>
+        <button onclick="generarCuadre()" class="bg-blue-600 text-white px-6 py-2.5 rounded-lg font-bold hover:bg-blue-700 shadow-lg transition">Generar Cuadre</button>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-        <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-green-500">
-          <p class="text-gray-500 text-sm font-semibold uppercase">Saldo en Libros (Esperado)</p>
-          <p id="saldo-total" class="text-3xl font-bold text-green-700">$0</p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <div class="bg-white p-6 rounded-2xl shadow-sm border-b-4 border-green-500">
+          <p class="text-xs text-gray-400 font-bold uppercase mb-1">Saldo en Libros</p>
+          <p id="saldo-total" class="text-4xl font-black text-green-600">$0</p>
         </div>
-        <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-black">
-          <p class="text-gray-500 text-sm font-semibold uppercase">Estado de Turno</p>
-          <p id="estado-turno" class="text-lg font-medium text-gray-700 font-mono italic">Esperando apertura...</p>
+        <div class="bg-white p-6 rounded-2xl shadow-sm border-b-4 border-gray-900">
+          <p class="text-xs text-gray-400 font-bold uppercase mb-1">Actividad de Turno</p>
+          <p id="estado-turno" class="text-lg font-medium">Inicie jornada registrando Saldo Inicial</p>
         </div>
       </div>
-      
-      <div class="bg-white p-6 rounded-xl shadow-md mb-6">
-        <h2 class="text-lg font-semibold mb-4">Registro de Movimiento</h2>
+
+      <div class="bg-white p-6 rounded-2xl shadow-md mb-8 border border-gray-100">
         <div class="grid md:grid-cols-4 gap-4">
-          <div>
-            <label class="text-xs text-gray-500 ml-1">Monto (COP)</label>
-            <input id="caja-monto" type="number" placeholder="0.00">
-          </div>
-          <div>
-            <label class="text-xs text-gray-500 ml-1">Tipo de Movimiento</label>
-            <select id="caja-tipo">
-              <option value="apertura">Apertura (Saldo Inicial)</option>
-              <option value="ingreso">Ingreso por Venta/Servicio</option>
-              <option value="gasto">Gasto / Egreso / Pago</option>
-            </select>
-          </div>
-          <div>
-            <label class="text-xs text-gray-500 ml-1">Descripción</label>
-            <input id="caja-desc" type="text" placeholder="Ej: Venta cerveza / Pago pan">
-          </div>
+          <div><label class="text-[10px] uppercase font-bold text-gray-400 mb-1 block">Monto</label>
+               <input id="caja-monto" type="number" placeholder="Ej: 50000"></div>
+          <div><label class="text-[10px] uppercase font-bold text-gray-400 mb-1 block">Tipo</label>
+               <select id="caja-tipo">
+                 <option value="apertura">Apertura (Saldo Inicial)</option>
+                 <option value="ingreso">Ingreso</option>
+                 <option value="gasto">Gasto / Egreso</option>
+               </select></div>
+          <div><label class="text-[10px] uppercase font-bold text-gray-400 mb-1 block">Descripción</label>
+               <input id="caja-desc" type="text" placeholder="Concepto del movimiento"></div>
           <div class="flex items-end">
-            <button onclick="registrarCaja()" class="w-full bg-black text-white rounded p-2.5 font-bold hover:bg-gray-800 transition">Registrar Transacción</button>
+            <button onclick="registrarCaja()" class="w-full bg-black text-white rounded-lg p-3 font-bold hover:bg-gray-800 transition">Registrar</button>
           </div>
         </div>
       </div>
 
-      <div class="bg-white rounded-xl shadow-md overflow-hidden">
-        <table class="w-full text-left border-collapse">
-          <thead class="bg-gray-50 text-gray-600 text-xs uppercase font-bold">
-            <tr>
-              <th class="p-4 border-b">Hora / Fecha</th>
-              <th class="p-4 border-b">Concepto</th>
-              <th class="p-4 border-b text-center">Tipo</th>
-              <th class="p-4 border-b text-right">Valor</th>
-            </tr>
+      <div class="bg-white rounded-2xl shadow-md overflow-hidden">
+        <table class="w-full text-left">
+          <thead class="bg-gray-50 text-[10px] uppercase text-gray-500 font-black">
+            <tr><th class="p-4">Hora</th><th class="p-4">Descripción</th><th class="p-4">Tipo</th><th class="p-4 text-right">Valor</th></tr>
           </thead>
           <tbody id="tablaCaja" class="text-sm"></tbody>
         </table>
@@ -94,47 +79,79 @@
     </section>
 
     <section id="reservas" class="module hidden">
-      <h1 class="text-3xl font-bold mb-6">Gestión de Reservas</h1>
-      <div class="bg-white p-6 rounded-xl shadow-md mb-6 grid md:grid-cols-3 gap-4">
-        <input id="res-cliente" placeholder="Nombre Huésped">
-        <input id="res-habitacion" placeholder="# Habitación o Cama">
-        <div>
-           <label class="text-xs text-gray-400 block ml-1">Check-In</label>
-           <input id="res-checkin" type="date">
-        </div>
+      <h1 class="text-3xl font-extrabold mb-8">Reservas</h1>
+      <div class="bg-white p-6 rounded-2xl shadow-md mb-8 grid md:grid-cols-3 gap-4">
+        <input id="res-cliente" placeholder="Nombre del Huésped">
+        <input id="res-habitacion" placeholder="Habitación">
+        <input id="res-checkin" type="date">
+        <select id="res-plataforma">
+          <option>Booking</option><option>Airbnb</option><option>Hostelworld</option><option>Directa</option><option>Walk-in</option>
+        </select>
         <select id="res-metodo" onchange="toggleDatafono(this.value)">
           <option value="Efectivo">Efectivo</option>
           <option value="Transferencia">Transferencia</option>
           <option value="Datafono">Datáfono</option>
         </select>
         <div id="div-aprobacion" class="hidden">
-           <input id="res-aprobacion" placeholder="Cód. Aprobación Datáfono">
+           <input id="res-aprobacion" placeholder="Código Aprobación">
         </div>
-        <input id="res-valor" type="number" placeholder="Valor de Reserva">
-        <button onclick="guardarReserva()" class="bg-black text-white rounded p-2 md:col-span-3 font-bold hover:bg-gray-800 transition">Confirmar Reserva en Sistema</button>
+        <input id="res-valor" type="number" placeholder="Valor Pagado">
+        <button onclick="guardarReserva()" class="bg-black text-white rounded-lg p-3 md:col-span-3 font-bold hover:bg-gray-800 transition">Guardar Registro</button>
       </div>
 
-      <table class="w-full bg-white rounded-xl shadow overflow-hidden text-sm">
-        <thead class="bg-black text-white">
-          <tr>
-            <th class="p-3 text-left">Huésped</th>
-            <th class="text-left">Hab.</th>
-            <th class="text-left">Check-In</th>
-            <th class="text-left">Pago</th>
-            <th class="text-left">Aprobación</th>
-          </tr>
-        </thead>
-        <tbody id="tablaReservas"></tbody>
-      </table>
+      <div class="bg-white rounded-2xl shadow-md overflow-hidden">
+        <table class="w-full text-sm">
+          <thead class="bg-black text-white">
+            <tr><th class="p-3 text-left">Huésped</th><th>Plataforma</th><th>Check-In</th><th>Pago</th><th>Valor</th></tr>
+          </thead>
+          <tbody id="tablaReservas"></tbody>
+        </table>
+      </div>
     </section>
 
-    </main>
+    <section id="inventario" class="module hidden">
+      <h1 class="text-3xl font-extrabold mb-8">Inventario</h1>
+      <div class="bg-white p-6 rounded-2xl shadow-md mb-8 grid md:grid-cols-3 gap-4">
+        <input id="inv-item" placeholder="Producto">
+        <input id="inv-stock" type="number" placeholder="Cantidad">
+        <button onclick="registrarInventario()" class="bg-black text-white rounded-lg font-bold">Agregar Item</button>
+      </div>
+      <div id="lista-inventario" class="grid grid-cols-2 md:grid-cols-4 gap-4"></div>
+    </section>
+
+    <section id="staff" class="module hidden">
+      <h1 class="text-3xl font-extrabold mb-8">Staff & Voluntarios</h1>
+      <div class="bg-white p-6 rounded-2xl shadow-md mb-8 grid md:grid-cols-3 gap-4">
+        <input id="staff-nombre" placeholder="Nombre Completo">
+        <input id="staff-rol" placeholder="Puesto / Turno">
+        <button onclick="registrarStaff()" class="bg-black text-white rounded-lg font-bold">Vincular</button>
+      </div>
+      <div id="lista-staff" class="space-y-2"></div>
+    </section>
+
+    <section id="checkin" class="module hidden text-center">
+      <div class="max-w-lg mx-auto bg-white p-10 rounded-3xl shadow-2xl border-t-8 border-black">
+        <h2 class="text-2xl font-black mb-2 uppercase">Registro Digital</h2>
+        <p class="text-gray-400 mb-8 text-sm italic">Bienvenido a La Clave Hostel</p>
+        <div class="space-y-4 text-left">
+          <div><label class="text-[10px] font-bold uppercase text-gray-500">Nombre Completo</label><input type="text"></div>
+          <div><label class="text-[10px] font-bold uppercase text-gray-500">ID / Pasaporte</label><input type="text"></div>
+          <div><label class="text-[10px] font-bold uppercase text-gray-500">Procedencia</label><input type="text"></div>
+          <button class="w-full bg-black text-white p-4 rounded-xl font-black hover:bg-gray-800 tracking-widest mt-4">FIRMAR REGISTRO</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
 </div>
 
 <script>
+// --- BASE DE DATOS LOCAL ---
 let db = {
-  caja: JSON.parse(localStorage.getItem('caja')) || [],
-  reservas: JSON.parse(localStorage.getItem('reservas')) || []
+  caja: JSON.parse(localStorage.getItem('caja_lc')) || [],
+  reservas: JSON.parse(localStorage.getItem('reservas_lc')) || [],
+  inventario: JSON.parse(localStorage.getItem('inventario_lc')) || [],
+  staff: JSON.parse(localStorage.getItem('staff_lc')) || []
 };
 
 function showModule(id) {
@@ -142,129 +159,116 @@ function showModule(id) {
   document.getElementById(id).classList.remove('hidden');
 }
 
-// --- LÓGICA DE CAJA MENOR CON HORA ---
+// --- LOGICA CAJA ---
 function registrarCaja() {
   const monto = parseFloat(document.getElementById('caja-monto').value);
   const tipo = document.getElementById('caja-tipo').value;
   const desc = document.getElementById('caja-desc').value;
   const ahora = new Date();
-  
-  if(!monto || !desc) return alert("Error: El monto y la descripción son obligatorios.");
 
-  const registro = {
+  if(!monto || !desc) return alert("Por favor complete monto y descripción.");
+
+  const item = {
     id: Date.now(),
-    fecha: ahora.toLocaleDateString(),
     hora: ahora.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-    desc: desc,
-    tipo: tipo,
-    monto: monto
+    desc, tipo, monto
   };
 
-  db.caja.push(registro);
-  localStorage.setItem('caja', JSON.stringify(db.caja));
-  
-  // Limpiar formulario
-  document.getElementById('caja-monto').value = '';
-  document.getElementById('caja-desc').value = '';
-  
+  db.caja.push(item);
+  localStorage.setItem('caja_lc', JSON.stringify(db.caja));
   renderCaja();
 }
 
 function renderCaja() {
   const tabla = document.getElementById('tablaCaja');
   let saldo = 0;
-  let ultimaApertura = "No registrada";
   tabla.innerHTML = '';
   
-  // Ordenar por ID (tiempo) para que los últimos salgan arriba
   db.caja.slice().reverse().forEach(i => {
     if(i.tipo === 'ingreso' || i.tipo === 'apertura') saldo += i.monto;
     else saldo -= i.monto;
 
-    if(i.tipo === 'apertura') ultimaApertura = `${i.fecha} - ${i.hora}`;
-
-    const colorMonto = (i.tipo === 'gasto') ? 'text-red-600' : 'text-green-600';
-    const signo = (i.tipo === 'gasto') ? '-' : '+';
-
     tabla.innerHTML += `
-      <tr class="border-b hover:bg-gray-50 transition">
-        <td class="p-4 font-mono text-gray-500">${i.fecha}<br><span class="text-black font-bold">${i.hora}</span></td>
-        <td class="p-4 font-medium">${i.desc}</td>
-        <td class="p-4 text-center">
-          <span class="px-2 py-1 rounded-full text-[10px] font-bold uppercase ${i.tipo==='gasto'?'bg-red-100 text-red-700':'bg-green-100 text-green-700'}">${i.tipo}</span>
-        </td>
-        <td class="p-4 text-right font-bold ${colorMonto}">${signo} $${i.monto.toLocaleString()}</td>
+      <tr class="border-b">
+        <td class="p-4 font-bold">${i.hora}</td>
+        <td class="p-4">${i.desc}</td>
+        <td class="p-4"><span class="px-2 py-0.5 rounded-full text-[9px] font-black uppercase ${i.tipo==='gasto'?'bg-red-100 text-red-600':'bg-green-100 text-green-600'}">${i.tipo}</span></td>
+        <td class="p-4 text-right font-bold ${i.tipo==='gasto'?'text-red-500':'text-green-500'}">$${i.monto.toLocaleString()}</td>
       </tr>
     `;
   });
-
   document.getElementById('saldo-total').innerText = `$${saldo.toLocaleString()}`;
-  document.getElementById('estado-turno').innerText = `Última apertura: ${ultimaApertura}`;
+  if(db.caja.length > 0) document.getElementById('estado-turno').innerText = "Turno en curso...";
 }
 
-// --- FUNCIÓN DE CUADRE DE CAJA ---
 function generarCuadre() {
   const saldoLibros = parseFloat(document.getElementById('saldo-total').innerText.replace(/[^0-9.-]+/g,""));
-  const efectivoReal = prompt("CUADRE DE CAJA\nIngrese el valor total del EFECTIVO FÍSICO que tiene en caja en este momento:");
-  
-  if (efectivoReal === null) return;
-  
-  const real = parseFloat(efectivoReal);
-  if (isNaN(real)) return alert("Error: Debe ingresar un valor numérico.");
-
-  const diferencia = real - saldoLibros;
-  let mensaje = `--- REPORTE DE CUADRE ---\n\n`;
-  mensaje += `Saldo en Libros: $${saldoLibros.toLocaleString()}\n`;
-  mensaje += `Efectivo Físico: $${real.toLocaleString()}\n`;
-  mensaje += `--------------------------\n`;
-  
-  if (diferencia === 0) {
-    mensaje += `✅ CAJA CUADRADA: El valor coincide perfectamente.`;
-  } else if (diferencia > 0) {
-    mensaje += `⚠️ SOBRANTE: Tienes $${diferencia.toLocaleString()} de más en el efectivo.`;
-  } else {
-    mensaje += `❌ FALTANTE: Te faltan $${Math.abs(diferencia).toLocaleString()} en el efectivo físico.`;
-  }
-
-  alert(mensaje);
+  const real = parseFloat(prompt("Ingrese el dinero FÍSICO que tiene en caja ahora:"));
+  if (isNaN(real)) return;
+  const diff = real - saldoLibros;
+  alert(`RESULTADO DEL CUADRE:\n\nSaldo en Sistema: $${saldoLibros.toLocaleString()}\nDinero Físico: $${real.toLocaleString()}\n\nDiferencia: $${diff.toLocaleString()}\n${diff === 0 ? "✅ CAJA PERFECTA" : "❌ REVISAR TRANSACCIONES"}`);
 }
 
-// --- LÓGICA DE RESERVAS ---
+// --- LOGICA RESERVAS ---
 function toggleDatafono(val) {
-  const div = document.getElementById('div-aprobacion');
-  val === 'Datafono' ? div.classList.remove('hidden') : div.classList.add('hidden');
+  document.getElementById('div-aprobacion').classList.toggle('hidden', val !== 'Datafono');
 }
 
 function guardarReserva() {
-  const reserva = {
+  const res = {
     cliente: document.getElementById('res-cliente').value,
-    habitacion: document.getElementById('res-habitacion').value,
+    plataforma: document.getElementById('res-plataforma').value,
     checkin: document.getElementById('res-checkin').value,
     metodo: document.getElementById('res-metodo').value,
-    aprobacion: document.getElementById('res-aprobacion').value || 'N/A'
+    valor: document.getElementById('res-valor').value
   };
-  
-  if(!reserva.cliente) return alert("Ingresa el nombre del huésped");
-  
-  db.reservas.push(reserva);
-  localStorage.setItem('reservas', JSON.stringify(db.reservas));
+  db.reservas.push(res);
+  localStorage.setItem('reservas_lc', JSON.stringify(db.reservas));
   renderReservas();
 }
 
 function renderReservas() {
-  const tabla = document.getElementById('tablaReservas');
-  tabla.innerHTML = '';
+  const t = document.getElementById('tablaReservas');
+  t.innerHTML = '';
   db.reservas.forEach(r => {
-    tabla.innerHTML += `<tr class="border-b"><td class="p-3">${r.cliente}</td><td>${r.habitacion}</td><td>${r.checkin}</td><td>${r.metodo}</td><td>${r.aprobacion}</td></tr>`;
+    t.innerHTML += `<tr class="border-b"><td class="p-3 font-bold">${r.cliente}</td><td>${r.plataforma}</td><td>${r.checkin}</td><td>${r.metodo}</td><td class="font-bold">$${Number(r.valor).toLocaleString()}</td></tr>`;
   });
 }
 
-// Inicialización profesional
-window.onload = () => {
-  renderCaja();
-  renderReservas();
-};
-</script>
+// --- LOGICA INVENTARIO ---
+function registrarInventario() {
+  const i = { nombre: document.getElementById('inv-item').value, stock: document.getElementById('inv-stock').value };
+  db.inventario.push(i);
+  localStorage.setItem('inventario_lc', JSON.stringify(db.inventario));
+  renderInventario();
+}
 
+function renderInventario() {
+  const c = document.getElementById('lista-inventario');
+  c.innerHTML = '';
+  db.inventario.forEach(i => {
+    c.innerHTML += `<div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100"><p class="text-[10px] uppercase text-gray-400 font-bold">${i.nombre}</p><p class="text-xl font-black">${i.stock} <span class="text-[10px]">UND</span></p></div>`;
+  });
+}
+
+// --- LOGICA STAFF ---
+function registrarStaff() {
+  const s = { nombre: document.getElementById('staff-nombre').value, rol: document.getElementById('staff-rol').value };
+  db.staff.push(s);
+  localStorage.setItem('staff_lc', JSON.stringify(db.staff));
+  renderStaff();
+}
+
+function renderStaff() {
+  const c = document.getElementById('lista-staff');
+  c.innerHTML = '';
+  db.staff.forEach(s => {
+    c.innerHTML += `<div class="bg-gray-100 p-3 rounded-xl flex justify-between items-center"><span class="font-bold">${s.nombre}</span><span class="text-[9px] font-black uppercase bg-white px-2 py-1 rounded-md border">${s.rol}</span></div>`;
+  });
+}
+
+// Inicialización
+window.onload = () => { renderCaja(); renderReservas(); renderInventario(); renderStaff(); };
+</script>
 </body>
 </html>
