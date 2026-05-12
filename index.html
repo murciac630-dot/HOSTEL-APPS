@@ -3,130 +3,67 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>La Clave Hostel | ERP Cloud Sync Corporate</title>
+  <title>La Clave Hostel | ERP Cloud Sync</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    /* Definición de la Gama Cromática de La Clave */
     :root {
       --lc-yellow: #FFD100;
       --lc-black: #1A1A1B;
-      --lc-gray: #F3F4F6;
     }
-
     .module { transition: all 0.3s ease; }
     .hidden { display: none !important; }
     
-    /* Inputs Estilizados */
     input, select, textarea { 
-      border: 2px solid #E5E7EB; 
-      padding: 0.7rem; 
-      border-radius: 0.75rem; 
-      width: 100%; 
-      outline: none; 
-      background-color: white; 
-      font-size: 14px;
-      transition: border-color 0.2s;
+      border: 2px solid #E5E7EB; padding: 0.7rem; border-radius: 0.75rem; 
+      width: 100%; outline: none; background-color: white; font-size: 14px;
     }
     input:focus, select:focus { border-color: var(--lc-yellow); box-shadow: 0 0 0 3px rgba(255, 209, 0, 0.2); }
     
-    /* Etiquetas Corporativas */
     label { 
-      font-size: 11px; 
-      text-transform: uppercase; 
-      font-weight: 900; 
-      color: var(--lc-black); 
-      margin-left: 4px; 
-      margin-bottom: 4px; 
-      display: block;
-      letter-spacing: 0.025em;
+      font-size: 11px; text-transform: uppercase; font-weight: 900; 
+      color: var(--lc-black); margin-left: 4px; margin-bottom: 4px; display: block;
     }
 
-    /* Botón Primario "La Clave" (Amarillo con Texto Negro) */
     .btn-primary {
-      background-color: var(--lc-yellow);
-      color: var(--lc-black);
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      padding: 1rem;
-      border-radius: 1rem;
-      transition: all 0.2s;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-      cursor: pointer;
+      background-color: var(--lc-yellow); color: var(--lc-black);
+      font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em;
+      padding: 1rem; border-radius: 1rem; transition: all 0.2s;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); cursor: pointer;
     }
-    .btn-primary:hover {
-      background-color: #e6bc00;
-      transform: translateY(-2px);
-      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-    }
-    .btn-primary:active { transform: scale(0.95); }
+    .btn-primary:hover { background-color: #e6bc00; transform: translateY(-2px); }
 
-    /* Estilos de Tabla */
     th { 
-      text-transform: uppercase; 
-      font-size: 11px; 
-      letter-spacing: 0.1em; 
-      background-color: var(--lc-black);
-      color: var(--lc-yellow);
-      padding: 1rem;
+      text-transform: uppercase; font-size: 11px; letter-spacing: 0.1em; 
+      background-color: var(--lc-black); color: var(--lc-yellow); padding: 1rem;
     }
 
-    .alert-8 { 
-      color: #ef4444; 
-      font-weight: 800; 
-      font-size: 11px; 
-      margin-top: 6px; 
-      display: block; 
-      animation: pulse 2s infinite; 
-    }
+    .alert-8 { color: #ef4444; font-weight: 800; font-size: 11px; animation: pulse 2s infinite; }
     @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
 
     .watermark-container { 
-      position: fixed; 
-      inset: 0; 
-      display: flex; 
-      align-items: center; 
-      justify-content: center; 
-      pointer-events: none; 
-      opacity: 0.08; 
-      z-index: 0; 
+      position: fixed; inset: 0; display: flex; align-items: center; 
+      justify-content: center; pointer-events: none; opacity: 0.12; z-index: 0; 
     }
 
-    /* Sidebar con acento amarillo */
     .nav-btn {
-      width: 100%;
-      text-align: left;
-      padding: 0.75rem 1rem;
-      border-radius: 0.75rem;
-      font-size: 0.875rem;
-      font-weight: 600;
-      transition: all 0.2s;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      color: white;
+      width: 100%; text-align: left; padding: 0.75rem 1rem; border-radius: 0.75rem;
+      font-size: 0.875rem; font-weight: 600; transition: all 0.2s;
+      display: flex; align-items: center; gap: 0.75rem; color: white;
     }
-    .nav-btn:hover {
-      background-color: rgba(255, 209, 0, 0.1);
-      color: var(--lc-yellow);
-    }
-    .nav-btn.active {
-      background-color: var(--lc-yellow);
-      color: var(--lc-black);
-    }
+    .nav-btn:hover { background-color: rgba(255, 209, 0, 0.1); color: var(--lc-yellow); }
+    .nav-btn.active { background-color: var(--lc-yellow); color: var(--lc-black); }
   </style>
 </head>
 <body class="bg-gray-100 min-h-screen text-gray-900 font-sans">
 
 <div class="watermark-container">
-  <img src="LC Logo IG-FB ProfilePic.png" alt="La Clave Watermark" class="max-w-2xl w-2/3 object-contain">
+  <img src="LC Logo IG-FB ProfilePic.png" alt="La Clave" class="max-w-2xl w-2/3 object-contain">
 </div>
 
 <div class="flex relative z-10">
-  <!-- Sidebar Corporativo -->
   <aside class="w-64 bg-[#1A1A1B] text-white min-h-screen p-6 fixed shadow-2xl overflow-y-auto border-r border-yellow-400/20">
     <div class="flex flex-col items-center mb-8">
-      <img src="LC Logo IG-FB ProfilePic.png" alt="Logo La Clave" class="w-24 mb-4 rounded-xl bg-white p-1 shadow-lg shadow-yellow-400/10">
+      <img src="LC Logo IG-FB ProfilePic.png" alt="Logo" class="w-24 mb-4 rounded-xl bg-white p-1">
       <h2 id="status-cloud" class="text-[9px] font-black tracking-[0.2em] text-red-500 uppercase italic bg-black/40 px-3 py-1 rounded-full border border-red-500/30">Desconectado</h2>
     </div>
     
@@ -141,55 +78,37 @@
   <main class="ml-64 flex-1 p-8">
     <!-- MÓDULO: RESERVAS -->
     <section id="reservas" class="module hidden">
-      <div class="flex justify-between items-center mb-8">
-        <div>
-          <h1 class="text-4xl font-black italic tracking-tighter uppercase text-[#1A1A1B]">Reservas Cloud</h1>
-          <div class="h-1 w-20 bg-[#FFD100] mt-1"></div>
-        </div>
-      </div>
-
+      <h1 class="text-4xl font-black italic tracking-tighter uppercase mb-8">Reservas Cloud</h1>
       <div class="bg-white/90 backdrop-blur-md p-8 rounded-3xl shadow-xl mb-8 border border-gray-200">
         <div class="grid md:grid-cols-3 gap-6">
-          <div><label>Nombre del Huésped</label><input id="res-cliente" placeholder="Nombre completo"></div>
-          <div><label>N° Identificación</label><input id="res-id" placeholder="ID / Pasaporte"></div>
-          <div><label>Email (Obligatorio)</label><input id="res-email" type="email" placeholder="cliente@correo.com"></div>
-          <div><label>WhatsApp</label><input id="res-whatsapp" placeholder="N° de contacto"></div>
-          <div>
-            <label>Habitación / Cama</label>
+          <div><label>Nombre</label><input id="res-cliente"></div>
+          <div><label>ID / Pasaporte</label><input id="res-id"></div>
+          <div><label>Email</label><input id="res-email" type="email"></div>
+          <div><label>WhatsApp</label><input id="res-whatsapp"></div>
+          <div><label>Habitación</label>
             <select id="res-habitacion">
               <option value="">-- Seleccionar --</option>
-              <optgroup label="Privadas">
-                <option>Andrés Caicedo</option><option>Jairo Varela</option><option>Sebastián de belalcázar</option><option>Jovita</option>
-              </optgroup>
-              <optgroup label="Compartidas">
-                <option>Guayacán (Cama)</option><option>Grupo Niche (Cama)</option><option>Agua e Lulo (Cama)</option><option>Habitación 8 (Cama)</option>
-              </optgroup>
+              <optgroup label="Privadas"><option>Andrés Caicedo</option><option>Jairo Varela</option><option>Sebastián de belalcázar</option><option>Jovita</option></optgroup>
+              <optgroup label="Compartidas"><option>Guayacán (Cama)</option><option>Grupo Niche (Cama)</option><option>Agua e Lulo (Cama)</option><option>Habitación 8 (Cama)</option></optgroup>
             </select>
           </div>
           <div><label>Check-In</label><input id="res-checkin" type="date"></div>
-          <div><label>Ciudad Origen</label><input id="res-origen"></div>
+          <div><label>Origen</label><input id="res-origen"></div>
           <div><label>Próxima Ciudad</label><input id="res-proxima"></div>
-          <div><label>Medio de Pago</label>
+          <div><label>Pago</label>
             <select id="res-metodo" onchange="toggleDatafono(this.value)">
               <option value="Efectivo">Efectivo</option><option value="Transferencia">Transferencia</option><option value="Datafono">Datáfono</option>
             </select>
-            <div id="alerta-comision" class="hidden alert-8">⚠️ APLICAR +8% DE COMISIÓN</div>
+            <div id="alerta-comision" class="hidden alert-8">⚠️ SUMAR 8%</div>
           </div>
-          <div id="campo-aprobacion" class="hidden"><label>Código Aprobación</label><input id="res-aprobacion"></div>
-          <div><label>Valor Total (COP)</label><input id="res-valor" type="number"></div>
-          
-          <div class="md:col-span-3 pt-6 border-t border-gray-100 mt-4">
-            <button onclick="guardarReserva()" class="btn-primary w-full">Sincronizar Reserva</button>
-          </div>
+          <div id="campo-aprobacion" class="hidden"><label>Código</label><input id="res-aprobacion"></div>
+          <div><label>Valor (COP)</label><input id="res-valor" type="number"></div>
+          <div class="md:col-span-3 pt-6 border-t mt-4"><button onclick="guardarReserva()" class="btn-primary w-full">Sincronizar Reserva</button></div>
         </div>
       </div>
-
-      <!-- Tabla de Reservas -->
       <div class="bg-white rounded-3xl shadow-lg overflow-hidden border border-gray-200">
         <table class="w-full text-sm text-left">
-          <thead>
-            <tr><th class="p-4">Huésped / ID</th><th class="p-4">Habitación</th><th class="p-4 text-center">Pago / Cód.</th><th class="p-4">Contacto</th><th class="p-4 text-right">Total</th></tr>
-          </thead>
+          <thead><tr><th class="p-4">Huésped</th><th class="p-4">Habitación</th><th class="p-4">Pago</th><th class="p-4 text-right">Total</th></tr></thead>
           <tbody id="tablaReservas" class="divide-y divide-gray-100"></tbody>
         </table>
       </div>
@@ -197,37 +116,24 @@
 
     <!-- MÓDULO: CAJA MENOR -->
     <section id="caja-menor" class="module">
-      <div class="flex justify-between items-center mb-8">
-        <h1 class="text-4xl font-black italic uppercase tracking-tighter text-[#1A1A1B]">Caja Menor Cloud</h1>
-        <button onclick="generarCuadre()" class="bg-[#1A1A1B] text-[#FFD100] px-6 py-2 rounded-xl font-black text-xs uppercase tracking-widest hover:bg-black transition shadow-lg">Cuadre de Caja</button>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-        <div class="bg-white p-8 rounded-3xl shadow-md border-b-8 border-[#FFD100] text-center">
-          <label>Saldo Global en Nube</label>
-          <p id="saldo-total" class="text-5xl font-black text-[#1A1A1B] tracking-tighter">$ 0</p>
+      <h1 class="text-4xl font-black italic uppercase tracking-tighter mb-8">Caja Menor Cloud</h1>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8 text-center">
+        <div class="bg-white p-8 rounded-3xl shadow-md border-b-8 border-[#FFD100]">
+          <label>Saldo en Libros</label><p id="saldo-total" class="text-5xl font-black">$ 0</p>
         </div>
-        <div class="bg-white p-8 rounded-3xl shadow-md border-b-8 border-gray-200 flex flex-col justify-center text-center">
-          <label>Sincronización</label>
-          <p id="estado-turno" class="text-gray-400 italic text-sm">Conectando...</p>
+        <div class="bg-white p-8 rounded-3xl shadow-md border-b-8 border-gray-200 italic text-gray-400">
+          <label>Estado</label><p id="estado-turno">Inicie turno...</p>
         </div>
       </div>
-
-      <div class="bg-white/90 p-6 rounded-3xl shadow-md mb-8 border border-gray-100">
+      <div class="bg-white p-6 rounded-3xl shadow-md mb-8 border border-gray-100">
         <div class="grid md:grid-cols-4 gap-4">
           <div><label>Valor</label><input id="caja-monto" type="number"></div>
           <div><label>Tipo</label><select id="caja-tipo"><option value="apertura">Saldo Inicial</option><option value="ingreso">Ingreso</option><option value="gasto">Gasto</option></select></div>
-          <div><label>Descripción</label><input id="caja-desc" type="text" placeholder="Ej: Compra cervezas"></div>
+          <div><label>Descripción</label><input id="caja-desc" type="text"></div>
           <div class="flex items-end"><button onclick="registrarCaja()" class="btn-primary w-full py-3">Registrar</button></div>
         </div>
       </div>
-      
-      <div class="bg-white rounded-3xl shadow-lg overflow-hidden border border-gray-100">
-        <table class="w-full text-sm text-left">
-          <thead><tr><th class="p-4">Hora</th><th class="p-4">Descripción</th><th class="p-4 text-center">Tipo</th><th class="p-4 text-right">Monto</th></tr></thead>
-          <tbody id="tablaCaja" class="divide-y divide-gray-100"></tbody>
-        </table>
-      </div>
+      <div class="bg-white rounded-3xl shadow-lg overflow-hidden"><table class="w-full text-sm text-left"><tbody id="tablaCaja" class="divide-y divide-gray-100"></tbody></table></div>
     </section>
   </main>
 </div>
@@ -238,16 +144,23 @@
   import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
   import { getFirestore, collection, addDoc, onSnapshot, query, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-  // Variables globales del entorno
-  const firebaseConfig = JSON.parse(__firebase_config);
+  // IMPORTANTE: Si estás en GitHub Pages, debes reemplazar estas variables con tu config de Firebase Console
+  const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
+      apiKey: "AIzaSyCFoHw2Wq85L0Sjwtj2Bj_Chk8bTkYuT9o",
+      authDomain: "studio-8186942404-f0682.firebaseapp.com",
+      projectId: "studio-8186942404-f0682",
+      storageBucket: "studio-8186942404-f0682.firebasestorage.app",
+      messagingSenderId: "921370572288",
+      appId: "1:921370572288:web:00d816663ac9ed64700ae5"
+  };
+
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
   const db = getFirestore(app);
-  const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+  const appId = typeof __app_id !== 'undefined' ? __app_id : 'la-clave-hostel-erp';
 
   let currentUser = null;
 
-  // --- AUTENTICACIÓN (REGLA 3) ---
   const initAuth = async () => {
     try {
       if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
@@ -256,7 +169,8 @@
         await signInAnonymously(auth);
       }
     } catch (e) {
-      console.error("Error en autenticación:", e);
+      console.error("Error Auth:", e);
+      document.getElementById('status-cloud').innerText = "Error Permisos";
     }
   };
   
@@ -269,114 +183,70 @@
       status.innerText = "Nube Conectada";
       status.className = "text-[9px] font-black tracking-[0.2em] text-green-400 uppercase italic bg-black/40 px-3 py-1 rounded-full border border-green-500/30";
       startListeners();
-    } else {
-      currentUser = null;
-      document.getElementById('status-cloud').innerText = "Desconectado";
-      document.getElementById('status-cloud').className = "text-[9px] font-black tracking-[0.2em] text-red-500 uppercase italic bg-black/40 px-3 py-1 rounded-full border border-red-500/30";
     }
   });
 
-  // --- LISTENERS (REGLA 1 Y 3) ---
   function startListeners() {
     if (!currentUser) return;
 
-    // Ruta estricta para Reservas
-    const qReservas = collection(db, 'artifacts', appId, 'public', 'data', 'reservas');
-    onSnapshot(qReservas, (snap) => {
-      renderReservas(snap.docs.map(d => ({...d.data(), id: d.id})));
-    }, (err) => {
-      console.error("Error de permisos en Reservas:", err);
-    });
+    // Listener de Reservas (Ruta estricta Artefactos)
+    const qRes = collection(db, 'artifacts', appId, 'public', 'data', 'reservas');
+    onSnapshot(qRes, (snap) => {
+      renderReservas(snap.docs.map(d => d.data()));
+    }, (err) => console.error("Permisos Reservas denegados:", err));
 
-    // Ruta estricta para Caja
+    // Listener de Caja
     const qCaja = collection(db, 'artifacts', appId, 'public', 'data', 'caja');
     onSnapshot(qCaja, (snap) => {
-      renderCaja(snap.docs.map(d => ({...d.data(), id: d.id})));
-    }, (err) => {
-      console.error("Error de permisos en Caja:", err);
-    });
+      renderCaja(snap.docs.map(d => d.data()));
+    }, (err) => console.error("Permisos Caja denegados:", err));
   }
 
-  // --- FUNCIONES ---
   window.guardarReserva = async () => {
-    if (!currentUser) return alert("⚠️ No hay conexión con la nube. Por favor, espere.");
-    
+    if (!currentUser) return alert("Esperando conexión...");
     const res = {
       cliente: document.getElementById('res-cliente').value,
-      id_legal: document.getElementById('res-id').value,
       email: document.getElementById('res-email').value,
-      whatsapp: document.getElementById('res-whatsapp').value,
+      valor: parseFloat(document.getElementById('res-valor').value) || 0,
       habitacion: document.getElementById('res-habitacion').value,
       metodo: document.getElementById('res-metodo').value,
-      cod: document.getElementById('res-aprobacion').value || 'N/A',
-      valor: parseFloat(document.getElementById('res-valor').value) || 0,
-      origen: document.getElementById('res-origen').value,
-      proxima: document.getElementById('res-proxima').value,
       timestamp: Date.now()
     };
-    
-    if(!res.cliente || !res.email || !res.valor) return alert("⚠️ Campos obligatorios: Nombre, Email y Valor.");
-
-    try {
-      await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'reservas'), res);
-      document.querySelectorAll('#reservas input, #reservas select').forEach(i => i.value = '');
-    } catch (e) {
-      console.error("Error al guardar reserva:", e);
-      alert("Error al sincronizar con la nube.");
-    }
+    if(!res.cliente || !res.valor) return alert("Nombre y Valor obligatorios");
+    await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'reservas'), res);
+    document.querySelectorAll('#reservas input').forEach(i => i.value = '');
   };
 
   window.registrarCaja = async () => {
-    if (!currentUser) return alert("⚠️ No hay conexión.");
-    
-    const monto = parseFloat(document.getElementById('caja-monto').value);
-    const tipo = document.getElementById('caja-tipo').value;
-    const desc = document.getElementById('caja-desc').value;
-    
-    if(!monto || !desc) return alert("Completa los datos.");
-    
-    const item = { 
-      monto, 
-      tipo, 
-      desc, 
-      hora: new Date().toLocaleTimeString(), 
-      timestamp: Date.now() 
+    if (!currentUser) return;
+    const item = {
+      monto: parseFloat(document.getElementById('caja-monto').value) || 0,
+      tipo: document.getElementById('caja-tipo').value,
+      desc: document.getElementById('caja-desc').value,
+      hora: new Date().toLocaleTimeString(),
+      timestamp: Date.now()
     };
-
-    try {
-      await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'caja'), item);
-      document.querySelectorAll('#caja-menor input').forEach(i => i.value = '');
-    } catch (e) {
-      console.error("Error al registrar caja:", e);
-    }
+    await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'caja'), item);
+    document.querySelectorAll('#caja-menor input').forEach(i => i.value = '');
   };
 
   function renderReservas(data) {
-    const t = document.getElementById('tablaReservas'); 
-    t.innerHTML = '';
-    // Ordenar en memoria (Regla 2: no usar orderBy en la consulta)
+    const t = document.getElementById('tablaReservas'); t.innerHTML = '';
     data.sort((a,b) => b.timestamp - a.timestamp).forEach(r => {
-      t.innerHTML += `<tr>
-        <td class="p-4"><b>${r.cliente}</b><br><span class="text-[10px] text-gray-400">ID: ${r.id_legal}</span></td>
-        <td class="p-4 text-xs font-semibold">${r.habitacion}</td>
-        <td class="p-4 text-center"><b>${r.metodo}</b><br><span class="text-[9px] text-gray-400">${r.cod}</span></td>
-        <td class="p-4 text-[11px] text-gray-500 leading-tight">${r.email}<br><b>${r.whatsapp}</b></td>
-        <td class="p-4 text-right font-black text-green-600">$ ${Number(r.valor).toLocaleString()}</td>
-      </tr>`;
+      t.innerHTML += `<tr><td class="p-4"><b>${r.cliente}</b></td><td class="p-4">${r.habitacion}</td><td class="p-4 text-center"><b>${r.metodo}</b></td><td class="p-4 text-right font-black text-green-600">$ ${r.valor.toLocaleString()}</td></tr>`;
     });
   }
 
   function renderCaja(data) {
     const t = document.getElementById('tablaCaja'); 
     let saldo = 0; t.innerHTML = '';
-    // Ordenar en memoria (Regla 2)
     data.sort((a,b) => b.timestamp - a.timestamp).forEach(i => {
       if(i.tipo === 'ingreso' || i.tipo === 'apertura') saldo += i.monto;
       else saldo -= i.monto;
-      t.innerHTML += `<tr><td class="p-4 font-bold text-gray-400">${i.hora}</td><td>${i.desc}</td><td class="text-center"><span class="px-2 py-1 rounded-full text-[9px] font-black uppercase ${i.tipo==='gasto'?'bg-red-100 text-red-600':'bg-green-100 text-green-600'}">${i.tipo}</span></td><td class="p-4 text-right font-bold">$ ${i.monto.toLocaleString()}</td></tr>`;
+      t.innerHTML += `<tr><td class="p-4 font-bold text-gray-400">${i.hora}</td><td>${i.desc}</td><td class="text-center font-bold ${i.tipo==='gasto'?'text-red-500':'text-green-500'}">${i.tipo}</td><td class="p-4 text-right font-bold">$ ${i.monto.toLocaleString()}</td></tr>`;
     });
     document.getElementById('saldo-total').innerText = `$ ${saldo.toLocaleString()}`;
-    document.getElementById('estado-turno').innerText = "Cloud Sincronizado ✅";
+    document.getElementById('estado-turno').innerText = "Sincronizado ✅";
   }
 
   window.showModule = (id, btn) => {
@@ -395,7 +265,7 @@
     const sistema = parseFloat(document.getElementById('saldo-total').innerText.replace(/[^0-9.-]+/g,""));
     const real = parseFloat(prompt("CUADRE: Efectivo físico contado:"));
     if(isNaN(real)) return;
-    alert(`REPORTE:\nSistema: $ ${sistema.toLocaleString()}\nFísico: $ ${real.toLocaleString()}\n\nDiferencia: $ ${(real-sistema).toLocaleString()}`);
+    alert(`Diferencia: $ ${(real-sistema).toLocaleString()}`);
   };
 </script>
 </body>
