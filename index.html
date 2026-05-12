@@ -83,9 +83,10 @@
           
           <div><label>Ciudad de Origen</label><input id="res-origen" placeholder="¿De dónde viene?"></div>
           <div><label>Próxima Ciudad</label><input id="res-proxima" placeholder="¿A dónde se dirige?"></div>
-          <div><label>Canal de Venta</label>
+          <div id="campo-email" class="hidden"><label>Email del Cliente (Requerido Datáfono)</label><input id="res-email" type="email" placeholder="cliente@ejemplo.com"></div>
+          <div><label>Plataforma de Reserva</label>
             <select id="res-plataforma">
-              <option>Directo / WhatsApp</option><option>Airbnb</option><option>Booking</option><option>Hostelworld</option><option>Walk-in</option>
+              <option>Directo / WhatsApp</option><option>Airbnb</option><option>Booking</option><option>Hostelworld</option>
             </select>
           </div>
 
@@ -96,7 +97,7 @@
               <option value="Datafono">Datáfono</option>
             </select>
           </div>
-          <div id="campo-email" class="hidden"><label>Email del Cliente (Requerido Datáfono)</label><input id="res-email" type="email" placeholder="cliente@ejemplo.com"></div>
+          <div><label>Suma el 8% al valor de la reserva></div>
           <div id="campo-aprobacion" class="hidden"><label>Código de Aprobación</label><input id="res-aprobacion" placeholder="6 dígitos"></div>
           
           <div><label>Valor Total Pagado</label><input id="res-valor" type="number" placeholder="0"></div>
