@@ -3,331 +3,400 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>La Clave Hostel | ERP Operativo Pro</title>
+  <title>La Clave Hostel | ERP Cloud Sync Corporate</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    /* Transiciones suaves para el cambio de módulos */
+    /* Definición de la Gama Cromática de La Clave */
+    :root {
+      --lc-yellow: #FFD100;
+      --lc-black: #1A1A1B;
+      --lc-gray: #F3F4F6;
+    }
+
     .module { transition: all 0.3s ease; }
     .hidden { display: none !important; }
     
-    /* Estilos globales para inputs profesionales */
+    /* Inputs Estilizados */
     input, select, textarea { 
-      border: 1px solid #d1d5db; 
-      padding: 0.6rem; 
-      border-radius: 0.5rem; 
+      border: 2px solid #E5E7EB; 
+      padding: 0.7rem; 
+      border-radius: 0.75rem; 
       width: 100%; 
       outline: none; 
       background-color: white; 
-      font-size: 14px; 
+      font-size: 14px;
+      transition: border-color 0.2s;
     }
-    input:focus, select:focus { border-color: #000; box-shadow: 0 0 0 1px #000; }
+    input:focus, select:focus { border-color: var(--lc-yellow); box-shadow: 0 0 0 3px rgba(255, 209, 0, 0.2); }
     
-    /* Etiquetas de formulario pequeñas y en mayúsculas */
+    /* Etiquetas Corporativas */
     label { 
-      font-size: 10px; 
+      font-size: 11px; 
       text-transform: uppercase; 
-      font-weight: 800; 
-      color: #4b5563; 
+      font-weight: 900; 
+      color: var(--lc-black); 
       margin-left: 4px; 
-      margin-bottom: 2px; 
-      display: block; 
+      margin-bottom: 4px; 
+      display: block;
+      letter-spacing: 0.025em;
     }
-    
-    /* Estilos para encabezados de tabla */
-    th { text-transform: uppercase; font-size: 11px; letter-spacing: 0.05em; }
-    
-    /* Alerta roja para la comisión del datáfono */
+
+    /* Botón Primario "La Clave" (Amarillo con Texto Negro) */
+    .btn-primary {
+      background-color: var(--lc-yellow);
+      color: var(--lc-black);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 1rem;
+      border-radius: 1rem;
+      transition: all 0.2s;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+    }
+    .btn-primary:hover {
+      background-color: #e6bc00;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    }
+    .btn-primary:active { transform: scale(0.95); }
+
+    /* Estilos de Tabla */
+    th { 
+      text-transform: uppercase; 
+      font-size: 11px; 
+      letter-spacing: 0.1em; 
+      background-color: var(--lc-black);
+      color: var(--lc-yellow);
+      padding: 1rem;
+    }
+
     .alert-8 { 
       color: #ef4444; 
-      font-weight: 700; 
+      font-weight: 800; 
       font-size: 11px; 
-      margin-top: 4px; 
+      margin-top: 6px; 
       display: block; 
-      animation: pulse 2s infinite;
+      animation: pulse 2s infinite; 
+    }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+    .watermark-container { 
+      position: fixed; 
+      inset: 0; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      pointer-events: none; 
+      opacity: 0.08; 
+      z-index: 0; 
     }
 
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.6; }
-    }
-
-    /* Mejora de contraste para la marca de agua mejorada */
-    .watermark-container {
-      position: fixed;
-      inset: 0;
+    /* Sidebar con acento amarillo */
+    .nav-btn {
+      width: 100%;
+      text-align: left;
+      padding: 0.75rem 1rem;
+      border-radius: 0.75rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      transition: all 0.2s;
       display: flex;
       align-items: center;
-      justify-content: center;
-      pointer-events: none;
-      /* Ajuste de opacidad: 0.12 (12%) para un balance perfecto */
-      opacity: 0.12; 
-      z-index: 0;
+      gap: 0.75rem;
+      color: white;
+    }
+    .nav-btn:hover {
+      background-color: rgba(255, 209, 0, 0.1);
+      color: var(--lc-yellow);
+    }
+    .nav-btn.active {
+      background-color: var(--lc-yellow);
+      color: var(--lc-black);
     }
   </style>
 </head>
 <body class="bg-gray-100 min-h-screen text-gray-900 font-sans">
 
-<!-- Logo de Fondo (Marca de Agua con Opacidad Mejorada) -->
 <div class="watermark-container">
   <img src="LC Logo IG-FB ProfilePic.png" alt="La Clave Watermark" class="max-w-2xl w-2/3 object-contain">
 </div>
 
 <div class="flex relative z-10">
-  <!-- Sidebar de Navegación -->
-  <aside class="w-64 bg-black text-white min-h-screen p-6 fixed shadow-2xl overflow-y-auto">
-    <img src="LC Logo IG-FB ProfilePic.png" alt="Logo La Clave" class="w-28 mx-auto mb-6 rounded-lg bg-white/10 p-2 shadow-inner">
-    <div class="text-center mb-8">
-      <h2 class="text-xs font-black tracking-[0.2em] text-gray-400 uppercase">Administración</h2>
+  <!-- Sidebar Corporativo -->
+  <aside class="w-64 bg-[#1A1A1B] text-white min-h-screen p-6 fixed shadow-2xl overflow-y-auto border-r border-yellow-400/20">
+    <div class="flex flex-col items-center mb-8">
+      <img src="LC Logo IG-FB ProfilePic.png" alt="Logo La Clave" class="w-24 mb-4 rounded-xl bg-white p-1 shadow-lg shadow-yellow-400/10">
+      <h2 id="status-cloud" class="text-[9px] font-black tracking-[0.2em] text-red-500 uppercase italic bg-black/40 px-3 py-1 rounded-full border border-red-500/30">Desconectado</h2>
     </div>
+    
     <nav class="space-y-2">
-      <button onclick="showModule('caja-menor')" class="w-full text-left p-3 hover:bg-gray-800 rounded-lg transition text-sm font-semibold flex items-center gap-3">
-        <span>💰</span> Caja Menor
-      </button>
-      <button onclick="showModule('reservas')" class="w-full text-left p-3 hover:bg-gray-800 rounded-lg transition text-sm font-semibold flex items-center gap-3">
-        <span>📅</span> Reservas & Pagos
-      </button>
-      <button onclick="showModule('inventario')" class="w-full text-left p-3 hover:bg-gray-800 rounded-lg transition text-sm font-semibold flex items-center gap-3">
-        <span>📦</span> Inventario
-      </button>
-      <button onclick="showModule('staff')" class="w-full text-left p-3 hover:bg-gray-800 rounded-lg transition text-sm font-semibold flex items-center gap-3">
-        <span>👥</span> Staff & Equipo
-      </button>
+      <button onclick="showModule('caja-menor', this)" class="nav-btn active"><span>💰</span> Caja Menor</button>
+      <button onclick="showModule('reservas', this)" class="nav-btn"><span>📅</span> Reservas & Pagos</button>
+      <button onclick="showModule('inventario', this)" class="nav-btn"><span>📦</span> Inventario</button>
+      <button onclick="showModule('staff', this)" class="nav-btn"><span>👥</span> Staff & Equipo</button>
     </nav>
   </aside>
 
-  <!-- Área de Contenido Principal -->
   <main class="ml-64 flex-1 p-8">
-
     <!-- MÓDULO: RESERVAS -->
-    <section id="reservas" class="module">
-      <div class="flex justify-between items-end mb-8">
+    <section id="reservas" class="module hidden">
+      <div class="flex justify-between items-center mb-8">
         <div>
-          <h1 class="text-4xl font-black italic tracking-tighter uppercase">Reservas</h1>
-          <p class="text-gray-400 text-sm">Registro legal y control de pagos</p>
+          <h1 class="text-4xl font-black italic tracking-tighter uppercase text-[#1A1A1B]">Reservas Cloud</h1>
+          <div class="h-1 w-20 bg-[#FFD100] mt-1"></div>
         </div>
       </div>
 
-      <div class="bg-white/90 backdrop-blur-sm p-8 rounded-3xl shadow-xl mb-8 border border-gray-100">
+      <div class="bg-white/90 backdrop-blur-md p-8 rounded-3xl shadow-xl mb-8 border border-gray-200">
         <div class="grid md:grid-cols-3 gap-6">
-          
           <div><label>Nombre del Huésped</label><input id="res-cliente" placeholder="Nombre completo"></div>
-          <div><label>N° Identificación (ID/Pasaporte)</label><input id="res-id" placeholder="Documento legal"></div>
+          <div><label>N° Identificación</label><input id="res-id" placeholder="ID / Pasaporte"></div>
           <div><label>Email (Obligatorio)</label><input id="res-email" type="email" placeholder="cliente@correo.com"></div>
-          <div><label>WhatsApp / Teléfono</label><input id="res-whatsapp" placeholder="Ej: +57 300..."></div>
-
+          <div><label>WhatsApp</label><input id="res-whatsapp" placeholder="N° de contacto"></div>
           <div>
             <label>Habitación / Cama</label>
             <select id="res-habitacion">
-              <option value="">-- Seleccionar Habitación --</option>
-              <optgroup label="Habitaciones Privadas">
-                <option>Andrés Caicedo</option>
-                <option>Jairo Varela</option>
-                <option>Sebastián de belalcázar</option>
-                <option>Jovita</option>
+              <option value="">-- Seleccionar --</option>
+              <optgroup label="Privadas">
+                <option>Andrés Caicedo</option><option>Jairo Varela</option><option>Sebastián de belalcázar</option><option>Jovita</option>
               </optgroup>
-              <optgroup label="Camas en Dormitorio">
-                <option>Guayacán (Cama)</option>
-                <option>Grupo Niche (Cama)</option>
-                <option>Agua e Lulo (Cama)</option>
-                <option>Habitación 8 (Cama)</option>
+              <optgroup label="Compartidas">
+                <option>Guayacán (Cama)</option><option>Grupo Niche (Cama)</option><option>Agua e Lulo (Cama)</option><option>Habitación 8 (Cama)</option>
               </optgroup>
             </select>
           </div>
-
-          <div><label>Fecha de Check-In</label><input id="res-checkin" type="date"></div>
-
-          <div><label>Ciudad de Origen</label><input id="res-origen" placeholder="¿De dónde viene?"></div>
-          <div><label>Próxima Ciudad</label><input id="res-proxima" placeholder="¿A dónde se dirige?"></div>
-          <div><label>Canal de Reserva</label>
-            <select id="res-plataforma">
-              <option>Directo / WhatsApp</option>
-              <option>Airbnb</option>
-              <option>Booking</option>
-              <option>Hostelworld</option>
-              <option>Walk-in</option>
-            </select>
-          </div>
-          
-          <div class="relative">
-            <label>Medio de Pago</label>
+          <div><label>Check-In</label><input id="res-checkin" type="date"></div>
+          <div><label>Ciudad Origen</label><input id="res-origen"></div>
+          <div><label>Próxima Ciudad</label><input id="res-proxima"></div>
+          <div><label>Medio de Pago</label>
             <select id="res-metodo" onchange="toggleDatafono(this.value)">
-              <option value="Efectivo">Efectivo</option>
-              <option value="Transferencia">Transferencia</option>
-              <option value="Datafono">Datáfono</option>
+              <option value="Efectivo">Efectivo</option><option value="Transferencia">Transferencia</option><option value="Datafono">Datáfono</option>
             </select>
-            <div id="alerta-comision" class="hidden alert-8">
-              ⚠️ APLICAR +8% DE COMISIÓN BANCARIA
-            </div>
+            <div id="alerta-comision" class="hidden alert-8">⚠️ APLICAR +8% DE COMISIÓN</div>
           </div>
-
-          <div id="campo-aprobacion" class="hidden">
-            <label>Código de Aprobación</label>
-            <input id="res-aprobacion" placeholder="Código de 6 dígitos">
-          </div>
-
-          <div><label>Valor Total Pagado (COP)</label><input id="res-valor" type="number" placeholder="$ 0"></div>
+          <div id="campo-aprobacion" class="hidden"><label>Código Aprobación</label><input id="res-aprobacion"></div>
+          <div><label>Valor Total (COP)</label><input id="res-valor" type="number"></div>
           
-          <div class="md:col-span-3 pt-6 border-t mt-2">
-            <button onclick="guardarReserva()" class="w-full bg-black text-white p-4 rounded-2xl font-black uppercase tracking-[0.2em] hover:bg-gray-800 transition shadow-lg active:scale-95">
-              Confirmar Registro en Sistema
-            </button>
+          <div class="md:col-span-3 pt-6 border-t border-gray-100 mt-4">
+            <button onclick="guardarReserva()" class="btn-primary w-full">Sincronizar Reserva</button>
           </div>
         </div>
       </div>
 
-      <div class="bg-white/95 backdrop-blur-sm rounded-3xl shadow-lg overflow-hidden border border-gray-100">
-        <div class="bg-gray-50/50 p-4 border-b flex justify-between items-center text-gray-500 font-bold uppercase text-xs">
-          <span>Libro de Huéspedes Recientes</span>
-        </div>
-        <div class="overflow-x-auto">
-          <table class="w-full text-sm text-left">
-            <thead class="bg-black text-white">
-              <tr>
-                <th class="p-4">Huésped / ID</th>
-                <th class="p-4">Habitación</th>
-                <th class="p-4 text-center">Pago / Cód.</th>
-                <th class="p-4">Origen ➡️ Destino</th>
-                <th class="p-4 text-right">Total</th>
-              </tr>
-            </thead>
-            <tbody id="tablaReservas"></tbody>
-          </table>
-        </div>
+      <!-- Tabla de Reservas -->
+      <div class="bg-white rounded-3xl shadow-lg overflow-hidden border border-gray-200">
+        <table class="w-full text-sm text-left">
+          <thead>
+            <tr><th class="p-4">Huésped / ID</th><th class="p-4">Habitación</th><th class="p-4 text-center">Pago / Cód.</th><th class="p-4">Contacto</th><th class="p-4 text-right">Total</th></tr>
+          </thead>
+          <tbody id="tablaReservas" class="divide-y divide-gray-100"></tbody>
+        </table>
       </div>
     </section>
 
     <!-- MÓDULO: CAJA MENOR -->
-    <section id="caja-menor" class="module hidden">
+    <section id="caja-menor" class="module">
       <div class="flex justify-between items-center mb-8">
-        <h1 class="text-4xl font-black italic uppercase tracking-tighter">Caja Menor</h1>
-        <button onclick="generarCuadre()" class="bg-blue-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-blue-700 transition shadow-lg">
-          Generar Cuadre de Turno
-        </button>
+        <h1 class="text-4xl font-black italic uppercase tracking-tighter text-[#1A1A1B]">Caja Menor Cloud</h1>
+        <button onclick="generarCuadre()" class="bg-[#1A1A1B] text-[#FFD100] px-6 py-2 rounded-xl font-black text-xs uppercase tracking-widest hover:bg-black transition shadow-lg">Cuadre de Caja</button>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-        <div class="bg-white/90 backdrop-blur-sm p-8 rounded-3xl shadow-md border-b-8 border-green-500 text-center">
-          <label class="mb-2">Saldo en Libros (Sistema)</label>
-          <p id="saldo-total" class="text-5xl font-black text-green-600 tracking-tighter">$ 0</p>
+        <div class="bg-white p-8 rounded-3xl shadow-md border-b-8 border-[#FFD100] text-center">
+          <label>Saldo Global en Nube</label>
+          <p id="saldo-total" class="text-5xl font-black text-[#1A1A1B] tracking-tighter">$ 0</p>
         </div>
-        <div class="bg-white/90 backdrop-blur-sm p-8 rounded-3xl shadow-md border-b-8 border-black flex flex-col justify-center text-center">
-          <label class="mb-2">Última Actividad</label>
-          <p id="estado-turno" class="text-gray-400 italic text-sm">No hay registros hoy</p>
+        <div class="bg-white p-8 rounded-3xl shadow-md border-b-8 border-gray-200 flex flex-col justify-center text-center">
+          <label>Sincronización</label>
+          <p id="estado-turno" class="text-gray-400 italic text-sm">Conectando...</p>
         </div>
       </div>
 
-      <div class="bg-white/90 p-6 rounded-3xl shadow-md mb-8">
+      <div class="bg-white/90 p-6 rounded-3xl shadow-md mb-8 border border-gray-100">
         <div class="grid md:grid-cols-4 gap-4">
-          <div><label>Valor</label><input id="caja-monto" type="number" placeholder="0"></div>
-          <div><label>Tipo de Registro</label>
-            <select id="caja-tipo">
-              <option value="apertura">Saldo Inicial (Base)</option>
-              <option value="ingreso">Ingreso / Venta</option>
-              <option value="gasto">Gasto / Egreso</option>
-            </select>
-          </div>
-          <div><label>Concepto / Detalle</label><input id="caja-desc" type="text" placeholder="Ej: Compra de hielo"></div>
-          <div class="flex items-end">
-            <button onclick="registrarCaja()" class="w-full bg-black text-white p-3 rounded-xl font-bold hover:bg-gray-800 transition">Grabar Movimiento</button>
-          </div>
+          <div><label>Valor</label><input id="caja-monto" type="number"></div>
+          <div><label>Tipo</label><select id="caja-tipo"><option value="apertura">Saldo Inicial</option><option value="ingreso">Ingreso</option><option value="gasto">Gasto</option></select></div>
+          <div><label>Descripción</label><input id="caja-desc" type="text" placeholder="Ej: Compra cervezas"></div>
+          <div class="flex items-end"><button onclick="registrarCaja()" class="btn-primary w-full py-3">Registrar</button></div>
         </div>
       </div>
-
-      <table class="w-full bg-white rounded-2xl shadow-md overflow-hidden text-sm">
-        <thead class="bg-gray-100 text-gray-500 border-b">
-          <tr><th class="p-4 text-left">Hora</th><th class="p-4 text-left">Descripción</th><th class="p-4 text-center">Estado</th><th class="p-4 text-right">Monto</th></tr>
-        </thead>
-        <tbody id="tablaCaja"></tbody>
-      </table>
+      
+      <div class="bg-white rounded-3xl shadow-lg overflow-hidden border border-gray-100">
+        <table class="w-full text-sm text-left">
+          <thead><tr><th class="p-4">Hora</th><th class="p-4">Descripción</th><th class="p-4 text-center">Tipo</th><th class="p-4 text-right">Monto</th></tr></thead>
+          <tbody id="tablaCaja" class="divide-y divide-gray-100"></tbody>
+        </table>
+      </div>
     </section>
-
   </main>
 </div>
 
-<script>
-// Base de datos persistente en el navegador
-let db = {
-  caja: JSON.parse(localStorage.getItem('lc_caja_v3')) || [],
-  reservas: JSON.parse(localStorage.getItem('lc_reservas_v3')) || []
-};
+<!-- FIREBASE SDKS -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+  import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+  import { getFirestore, collection, addDoc, onSnapshot, query, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-function showModule(id) {
-  document.querySelectorAll('.module').forEach(m => m.classList.add('hidden'));
-  const target = document.getElementById(id);
-  if (target) target.classList.remove('hidden');
-}
+  // Variables globales del entorno
+  const firebaseConfig = JSON.parse(__firebase_config);
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+  const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
 
-function registrarCaja() {
-  const monto = parseFloat(document.getElementById('caja-monto').value);
-  const tipo = document.getElementById('caja-tipo').value;
-  const desc = document.getElementById('caja-desc').value;
-  if(!monto || !desc) return alert("Por favor, ingrese el valor y el concepto.");
-  const registro = { id: Date.now(), hora: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }), desc, tipo, monto };
-  db.caja.push(registro);
-  localStorage.setItem('lc_caja_v3', JSON.stringify(db.caja));
-  document.getElementById('caja-monto').value = '';
-  document.getElementById('caja-desc').value = '';
-  renderCaja();
-}
+  let currentUser = null;
 
-function renderCaja() {
-  const t = document.getElementById('tablaCaja');
-  let saldo = 0; t.innerHTML = '';
-  db.caja.slice().reverse().forEach(i => {
-    if(i.tipo === 'ingreso' || i.tipo === 'apertura') saldo += i.monto;
-    else saldo -= i.monto;
-    const colorMonto = i.tipo === 'gasto' ? 'text-red-500' : 'text-green-600';
-    t.innerHTML += `<tr class="border-b"><td class="p-4 font-bold text-gray-400">${i.hora}</td><td class="p-4 font-medium">${i.desc}</td><td class="p-4 text-center"><span class="px-2 py-1 rounded-full text-[9px] font-black uppercase ${i.tipo==='gasto'?'bg-red-100 text-red-600':'bg-green-100 text-green-600'}">${i.tipo}</span></td><td class="p-4 text-right font-bold ${colorMonto}">$ ${i.monto.toLocaleString()}</td></tr>`;
-  });
-  document.getElementById('saldo-total').innerText = `$ ${saldo.toLocaleString()}`;
-  if(db.caja.length > 0) document.getElementById('estado-turno').innerText = "Turno en operación";
-}
-
-function generarCuadre() {
-  const sistema = parseFloat(document.getElementById('saldo-total').innerText.replace(/[^0-9.-]+/g,""));
-  const real = parseFloat(prompt("VERIFICACIÓN DE CAJA:\nIngrese el efectivo físico contado:"));
-  if(isNaN(real)) return;
-  const diferencia = real - sistema;
-  alert(`REPORTE:\nSISTEMA: $ ${sistema.toLocaleString()}\nFÍSICO: $ ${real.toLocaleString()}\n\nDIFERENCIA: $ ${diferencia.toLocaleString()}`);
-}
-
-function toggleDatafono(val) {
-  document.getElementById('campo-aprobacion').classList.toggle('hidden', val !== 'Datafono');
-  document.getElementById('alerta-comision').classList.toggle('hidden', val !== 'Datafono');
-}
-
-function guardarReserva() {
-  const res = {
-    cliente: document.getElementById('res-cliente').value,
-    id_legal: document.getElementById('res-id').value,
-    email: document.getElementById('res-email').value,
-    whatsapp: document.getElementById('res-whatsapp').value,
-    habitacion: document.getElementById('res-habitacion').value,
-    checkin: document.getElementById('res-checkin').value,
-    origen: document.getElementById('res-origen').value,
-    proxima: document.getElementById('res-proxima').value,
-    metodo: document.getElementById('res-metodo').value,
-    cod: document.getElementById('res-aprobacion').value || 'N/A',
-    valor: document.getElementById('res-valor').value
+  // --- AUTENTICACIÓN (REGLA 3) ---
+  const initAuth = async () => {
+    try {
+      if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+        await signInWithCustomToken(auth, __initial_auth_token);
+      } else {
+        await signInAnonymously(auth);
+      }
+    } catch (e) {
+      console.error("Error en autenticación:", e);
+    }
   };
-  if(!res.cliente || !res.id_legal || !res.email || !res.habitacion || !res.valor) {
-    return alert("⚠️ ERROR: Completa los campos obligatorios.");
-  }
-  db.reservas.push(res);
-  localStorage.setItem('lc_reservas_v3', JSON.stringify(db.reservas));
-  renderReservas();
-  document.querySelectorAll('#reservas input, #reservas select').forEach(i => i.value = '');
-  toggleDatafono('Efectivo');
-}
+  
+  initAuth();
 
-function renderReservas() {
-  const t = document.getElementById('tablaReservas'); t.innerHTML = '';
-  db.reservas.slice().reverse().forEach(r => {
-    t.innerHTML += `<tr class="border-b hover:bg-gray-50 transition"><td class="p-4"><b>${r.cliente}</b><br><span class="text-[10px] text-gray-400">ID: ${r.id_legal}</span></td><td class="p-4 text-xs font-semibold text-gray-700">${r.habitacion}</td><td class="p-4 text-center"><b>${r.metodo}</b><br><span class="text-[9px] text-gray-400">Aprob: ${r.cod}</span></td><td class="p-4 text-[11px] text-gray-500 leading-tight">${r.email}<br><span class="text-black font-medium">${r.whatsapp}</span></td><td class="p-4 text-right font-black text-green-600">$ ${Number(r.valor).toLocaleString()}</td></tr>`;
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      currentUser = user;
+      const status = document.getElementById('status-cloud');
+      status.innerText = "Nube Conectada";
+      status.className = "text-[9px] font-black tracking-[0.2em] text-green-400 uppercase italic bg-black/40 px-3 py-1 rounded-full border border-green-500/30";
+      startListeners();
+    } else {
+      currentUser = null;
+      document.getElementById('status-cloud').innerText = "Desconectado";
+      document.getElementById('status-cloud').className = "text-[9px] font-black tracking-[0.2em] text-red-500 uppercase italic bg-black/40 px-3 py-1 rounded-full border border-red-500/30";
+    }
   });
-}
 
-window.onload = () => { renderCaja(); renderReservas(); };
+  // --- LISTENERS (REGLA 1 Y 3) ---
+  function startListeners() {
+    if (!currentUser) return;
+
+    // Ruta estricta para Reservas
+    const qReservas = collection(db, 'artifacts', appId, 'public', 'data', 'reservas');
+    onSnapshot(qReservas, (snap) => {
+      renderReservas(snap.docs.map(d => ({...d.data(), id: d.id})));
+    }, (err) => {
+      console.error("Error de permisos en Reservas:", err);
+    });
+
+    // Ruta estricta para Caja
+    const qCaja = collection(db, 'artifacts', appId, 'public', 'data', 'caja');
+    onSnapshot(qCaja, (snap) => {
+      renderCaja(snap.docs.map(d => ({...d.data(), id: d.id})));
+    }, (err) => {
+      console.error("Error de permisos en Caja:", err);
+    });
+  }
+
+  // --- FUNCIONES ---
+  window.guardarReserva = async () => {
+    if (!currentUser) return alert("⚠️ No hay conexión con la nube. Por favor, espere.");
+    
+    const res = {
+      cliente: document.getElementById('res-cliente').value,
+      id_legal: document.getElementById('res-id').value,
+      email: document.getElementById('res-email').value,
+      whatsapp: document.getElementById('res-whatsapp').value,
+      habitacion: document.getElementById('res-habitacion').value,
+      metodo: document.getElementById('res-metodo').value,
+      cod: document.getElementById('res-aprobacion').value || 'N/A',
+      valor: parseFloat(document.getElementById('res-valor').value) || 0,
+      origen: document.getElementById('res-origen').value,
+      proxima: document.getElementById('res-proxima').value,
+      timestamp: Date.now()
+    };
+    
+    if(!res.cliente || !res.email || !res.valor) return alert("⚠️ Campos obligatorios: Nombre, Email y Valor.");
+
+    try {
+      await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'reservas'), res);
+      document.querySelectorAll('#reservas input, #reservas select').forEach(i => i.value = '');
+    } catch (e) {
+      console.error("Error al guardar reserva:", e);
+      alert("Error al sincronizar con la nube.");
+    }
+  };
+
+  window.registrarCaja = async () => {
+    if (!currentUser) return alert("⚠️ No hay conexión.");
+    
+    const monto = parseFloat(document.getElementById('caja-monto').value);
+    const tipo = document.getElementById('caja-tipo').value;
+    const desc = document.getElementById('caja-desc').value;
+    
+    if(!monto || !desc) return alert("Completa los datos.");
+    
+    const item = { 
+      monto, 
+      tipo, 
+      desc, 
+      hora: new Date().toLocaleTimeString(), 
+      timestamp: Date.now() 
+    };
+
+    try {
+      await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'caja'), item);
+      document.querySelectorAll('#caja-menor input').forEach(i => i.value = '');
+    } catch (e) {
+      console.error("Error al registrar caja:", e);
+    }
+  };
+
+  function renderReservas(data) {
+    const t = document.getElementById('tablaReservas'); 
+    t.innerHTML = '';
+    // Ordenar en memoria (Regla 2: no usar orderBy en la consulta)
+    data.sort((a,b) => b.timestamp - a.timestamp).forEach(r => {
+      t.innerHTML += `<tr>
+        <td class="p-4"><b>${r.cliente}</b><br><span class="text-[10px] text-gray-400">ID: ${r.id_legal}</span></td>
+        <td class="p-4 text-xs font-semibold">${r.habitacion}</td>
+        <td class="p-4 text-center"><b>${r.metodo}</b><br><span class="text-[9px] text-gray-400">${r.cod}</span></td>
+        <td class="p-4 text-[11px] text-gray-500 leading-tight">${r.email}<br><b>${r.whatsapp}</b></td>
+        <td class="p-4 text-right font-black text-green-600">$ ${Number(r.valor).toLocaleString()}</td>
+      </tr>`;
+    });
+  }
+
+  function renderCaja(data) {
+    const t = document.getElementById('tablaCaja'); 
+    let saldo = 0; t.innerHTML = '';
+    // Ordenar en memoria (Regla 2)
+    data.sort((a,b) => b.timestamp - a.timestamp).forEach(i => {
+      if(i.tipo === 'ingreso' || i.tipo === 'apertura') saldo += i.monto;
+      else saldo -= i.monto;
+      t.innerHTML += `<tr><td class="p-4 font-bold text-gray-400">${i.hora}</td><td>${i.desc}</td><td class="text-center"><span class="px-2 py-1 rounded-full text-[9px] font-black uppercase ${i.tipo==='gasto'?'bg-red-100 text-red-600':'bg-green-100 text-green-600'}">${i.tipo}</span></td><td class="p-4 text-right font-bold">$ ${i.monto.toLocaleString()}</td></tr>`;
+    });
+    document.getElementById('saldo-total').innerText = `$ ${saldo.toLocaleString()}`;
+    document.getElementById('estado-turno').innerText = "Cloud Sincronizado ✅";
+  }
+
+  window.showModule = (id, btn) => {
+    document.querySelectorAll('.module').forEach(m => m.classList.add('hidden'));
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.remove('hidden');
+    btn.classList.add('active');
+  };
+
+  window.toggleDatafono = (val) => {
+    document.getElementById('campo-aprobacion').classList.toggle('hidden', val !== 'Datafono');
+    document.getElementById('alerta-comision').classList.toggle('hidden', val !== 'Datafono');
+  };
+
+  window.generarCuadre = () => {
+    const sistema = parseFloat(document.getElementById('saldo-total').innerText.replace(/[^0-9.-]+/g,""));
+    const real = parseFloat(prompt("CUADRE: Efectivo físico contado:"));
+    if(isNaN(real)) return;
+    alert(`REPORTE:\nSistema: $ ${sistema.toLocaleString()}\nFísico: $ ${real.toLocaleString()}\n\nDiferencia: $ ${(real-sistema).toLocaleString()}`);
+  };
 </script>
 </body>
 </html>
