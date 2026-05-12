@@ -1,241 +1,246 @@
-html_content = """<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>La Clave Hostel | ERP Operativo Integral</title>
+  <title>La Clave Hostel | ERP V2.0 Professional</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
-    .module { transition: opacity 0.3s ease; }
+    .module { transition: all 0.3s ease; }
     .hidden { display: none !important; }
+    input, select { border: 1px solid #d1d5db; padding: 0.5rem; border-radius: 0.375rem; width: 100%; }
   </style>
 </head>
-<body class="bg-gray-100 min-h-screen text-gray-800 relative">
+<body class="bg-gray-100 min-h-screen text-gray-800">
 
-<div class="fixed inset-0 flex items-center justify-center pointer-events-none opacity-5 z-0">
-  <img src="LC Logo IG-FB ProfilePic.png" alt="La Clave Hostel Logo" class="max-w-3xl w-2/3 object-contain">
-</div>
-
-<div class="flex relative z-10">
-  <aside class="w-72 bg-black/95 backdrop-blur-md text-white min-h-screen p-6 space-y-4 shadow-2xl">
-    <div class="flex flex-col items-center mb-4">
-      <img src="LC Logo IG-FB ProfilePic.png" alt="Logo La Clave Hostel" class="w-32 mb-3 rounded-xl shadow-lg">
-    </div>
-    <div class="text-2xl font-bold border-b pb-4">La Clave Hostel ERP</div>
-    <nav class="space-y-3">
-      <button onclick="showModule('reservas')" class="w-full text-left hover:text-yellow-400">1. Caja & Reservas</button>
-      <button onclick="showModule('inventario')" class="w-full text-left hover:text-yellow-400">2. Inventario</button>
-      <button onclick="showModule('gastos')" class="w-full text-left hover:text-yellow-400">3. Gastos Operativos</button>
-      <button onclick="showModule('facturacion')" class="w-full text-left hover:text-yellow-400">4. Facturación SIIGO</button>
-      <button onclick="showModule('dashboard')" class="w-full text-left hover:text-yellow-400">5. Dashboard Financiero</button>
-      <button onclick="showModule('reportes')" class="w-full text-left hover:text-yellow-400">6. Reportes Mensuales</button>
-      <button onclick="showModule('staff')" class="w-full text-left hover:text-yellow-400">7. Staff & Voluntarios</button>
-      <button onclick="showModule('checkin')" class="w-full text-left hover:text-yellow-400">8. Check-In Digital</button>
+<div class="flex">
+  <aside class="w-72 bg-black text-white min-h-screen p-6 space-y-4 fixed shadow-2xl">
+    <div class="text-2xl font-bold border-b border-gray-700 pb-4 mb-6">La Clave ERP</div>
+    <nav class="space-y-2 text-sm">
+      <button onclick="showModule('caja-menor')" class="w-full text-left p-2 hover:bg-gray-800 rounded">💰 Caja Menor</button>
+      <button onclick="showModule('reservas')" class="w-full text-left p-2 hover:bg-gray-800 rounded">📅 Reservas</button>
+      <button onclick="showModule('inventario')" class="w-full text-left p-2 hover:bg-gray-800 rounded">📦 Inventario</button>
+      <button onclick="showModule('gastos')" class="w-full text-left p-2 hover:bg-gray-800 rounded">💸 Gastos Operativos</button>
+      <button onclick="showModule('staff')" class="w-full text-left p-2 hover:bg-gray-800 rounded">👥 Staff & Voluntarios</button>
+      <button onclick="showModule('checkin')" class="w-full text-left p-2 hover:bg-gray-800 rounded">📝 Check-In Digital</button>
+      <button onclick="showModule('dashboard')" class="w-full text-left p-2 hover:bg-gray-800 rounded">📊 Dashboard</button>
     </nav>
   </aside>
 
-  <main class="flex-1 p-8 relative">
+  <main class="ml-72 flex-1 p-8">
 
-    <section id="reservas" class="module">
-      <h1 class="text-3xl font-bold mb-6">Registro Diario de Caja y Reservas</h1>
-      <div class="bg-white/95 backdrop-blur-sm p-6 rounded-2xl shadow-md mb-6 grid md:grid-cols-3 gap-4">
-        <input id="cliente" placeholder="Nombre Cliente" class="border p-2 rounded">
-        <input id="documento" placeholder="Documento" class="border p-2 rounded">
-        <input id="contacto" placeholder="Contacto" class="border p-2 rounded">
-        <input id="habitacion" placeholder="Habitación" class="border p-2 rounded">
-        <input id="checkin" type="date" class="border p-2 rounded">
-        <input id="checkout" type="date" class="border p-2 rounded">
-        <select id="plataforma" class="border p-2 rounded">
-          <option>Booking</option>
-          <option>Airbnb</option>
-          <option>Hostelworld</option>
-          <option>Directa</option>
-          <option>Walk-in</option>
+    <section id="caja-menor" class="module">
+      <h1 class="text-3xl font-bold mb-6">Manejo de Caja Menor</h1>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+        <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-green-500">
+          <p class="text-gray-500 text-sm">Saldo Actual</p>
+          <p id="saldo-total" class="text-2xl font-bold">$0</p>
+        </div>
+      </div>
+      
+      <div class="bg-white p-6 rounded-xl shadow-md mb-6">
+        <h2 class="text-lg font-semibold mb-4">Nueva Transacción</h2>
+        <div class="grid md:grid-cols-4 gap-4">
+          <input id="caja-monto" type="number" placeholder="Monto">
+          <select id="caja-tipo">
+            <option value="ingreso">Ingreso</option>
+            <option value="gasto">Gasto / Egreso</option>
+            <option value="apertura">Apertura de Turno</option>
+          </select>
+          <input id="caja-desc" type="text" placeholder="Descripción (Ej: Compra Pan)">
+          <button onclick="registrarCaja()" class="bg-green-600 text-white rounded p-2 hover:bg-green-700">Registrar</button>
+        </div>
+      </div>
+
+      <table class="w-full bg-white rounded-xl shadow overflow-hidden">
+        <thead class="bg-gray-800 text-white text-sm">
+          <tr><th class="p-3 text-left">Fecha</th><th class="text-left">Descripción</th><th class="text-left">Tipo</th><th class="text-left">Valor</th></tr>
+        </thead>
+        <tbody id="tablaCaja"></tbody>
+      </table>
+    </section>
+
+    <section id="reservas" class="module hidden">
+      <h1 class="text-3xl font-bold mb-6">Gestión de Reservas</h1>
+      <div class="bg-white p-6 rounded-xl shadow-md mb-6 grid md:grid-cols-3 gap-4">
+        <input id="res-cliente" placeholder="Nombre Cliente">
+        <input id="res-habitacion" placeholder="Habitación">
+        <input id="res-checkin" type="date">
+        <select id="res-metodo" onchange="toggleDatafono(this.value)">
+          <option value="Efectivo">Efectivo</option>
+          <option value="Transferencia">Transferencia</option>
+          <option value="Datafono">Datáfono</option>
         </select>
-        <input id="valor" type="number" placeholder="Valor Pagado" class="border p-2 rounded">
-        <select id="metodo" class="border p-2 rounded">
-          <option>Efectivo</option>
-          <option>Transferencia</option>
-          <option>Tarjeta</option>
-        </select>
-        <button onclick="guardarReserva()" class="bg-black text-white rounded p-3 hover:bg-gray-800">Guardar Registro</button>
+        <div id="div-aprobacion" class="hidden">
+           <input id="res-aprobacion" placeholder="Código de Aprobación">
+        </div>
+        <input id="res-valor" type="number" placeholder="Valor Total">
+        <button onclick="guardarReserva()" class="bg-black text-white rounded p-2 md:col-span-3 hover:bg-gray-800">Guardar Reserva</button>
       </div>
 
       <table class="w-full bg-white rounded-xl shadow overflow-hidden">
         <thead class="bg-black text-white">
-          <tr>
-            <th class="p-3 text-left">Cliente</th>
-            <th class="text-left">Plataforma</th>
-            <th class="text-left">Habitación</th>
-            <th class="text-left">Valor</th>
-            <th class="text-left">Método</th>
-          </tr>
+          <tr><th class="p-3 text-left">Cliente</th><th class="text-left">Habitación</th><th class="text-left">Check-In</th><th class="text-left">Pago</th><th class="text-left">Aprobación</th></tr>
         </thead>
         <tbody id="tablaReservas"></tbody>
       </table>
     </section>
 
     <section id="inventario" class="module hidden">
-      <h1 class="text-3xl font-bold mb-6">Control de Inventario</h1>
-      <div class="bg-white/95 backdrop-blur-sm p-6 rounded-2xl shadow-md space-y-4">
-        <p>Control de bar, recepción, lavandería, limpieza y consumibles.</p>
+      <h1 class="text-3xl font-bold mb-6">Inventario Bar / Suministros</h1>
+      <div class="bg-white p-6 rounded-xl shadow-md mb-6 grid md:grid-cols-3 gap-4">
+        <input id="inv-item" placeholder="Producto (Ej: Club Colombia)">
+        <input id="inv-stock" type="number" placeholder="Cantidad">
+        <button onclick="agregarInventario()" class="bg-blue-600 text-white rounded p-2">Actualizar Stock</button>
       </div>
+      <div id="lista-inventario" class="grid grid-cols-2 md:grid-cols-4 gap-4"></div>
     </section>
 
-    <section id="gastos" class="module hidden">
-      <h1 class="text-3xl font-bold mb-6">Gastos Operativos Diarios</h1>
-      <div class="bg-white/95 backdrop-blur-sm p-6 rounded-2xl shadow-md">
-        <p>Registro de compras, mantenimiento, suministros y gastos menores.</p>
+    <section id="staff" class="module hidden">
+      <h1 class="text-3xl font-bold mb-6">Staff & Voluntarios</h1>
+      <div class="bg-white p-6 rounded-xl shadow-md mb-6 grid md:grid-cols-3 gap-4">
+        <input id="staff-nombre" placeholder="Nombre Completo">
+        <input id="staff-rol" placeholder="Rol (Ej: Recepcionista)">
+        <button onclick="agregarStaff()" class="bg-purple-600 text-white rounded p-2">Registrar Personal</button>
       </div>
+      <div id="lista-staff" class="space-y-2"></div>
     </section>
 
-    <section id="facturacion" class="module hidden">
-      <h1 class="text-3xl font-bold mb-6">Facturación Electrónica SIIGO</h1>
-      <div class="bg-white/95 backdrop-blur-sm p-6 rounded-2xl shadow-md space-y-6">
-        <h2 class="text-xl font-semibold">Generar Factura para Reserva</h2>
-        <div class="grid md:grid-cols-2 gap-4">
-          <input id="fact_nombre" placeholder="Nombre Cliente" class="border p-2 rounded">
-          <input id="fact_documento" placeholder="Documento Cliente" class="border p-2 rounded">
-          <input id="fact_correo" placeholder="Correo Cliente" class="border p-2 rounded">
-          <input id="fact_telefono" placeholder="Teléfono Cliente" class="border p-2 rounded">
-          <input id="fact_concepto" placeholder="Concepto Factura" class="border p-2 rounded">
-          <input id="fact_valor" type="number" placeholder="Valor Total" class="border p-2 rounded">
-          <select id="fact_metodo" class="border p-2 rounded">
-            <option>Efectivo</option>
-            <option>Transferencia</option>
-            <option>Tarjeta</option>
-          </select>
-          <select id="fact_estado" class="border p-2 rounded">
-            <option>Pendiente</option>
-            <option>Facturada</option>
-            <option>Anulada</option>
-          </select>
+    <section id="checkin" class="module hidden">
+      <h1 class="text-3xl font-bold mb-6">Check-In Digital (Huésped)</h1>
+      <div class="bg-white p-8 rounded-2xl shadow-xl max-w-2xl mx-auto border-t-8 border-black">
+        <p class="mb-6 text-gray-600">Bienvenido a La Clave Hostel. Por favor registra tus datos legales.</p>
+        <div class="space-y-4">
+          <input type="text" placeholder="Nombre Completo">
+          <input type="text" placeholder="Número de Pasaporte / ID">
+          <input type="text" placeholder="Nacionalidad">
+          <textarea placeholder="Observaciones de Salud / Alergias" class="w-full border rounded p-2"></textarea>
+          <button class="w-full bg-black text-white p-3 rounded-lg font-bold">FIRMAR Y REGISTRAR</button>
         </div>
-        <div class="flex gap-4">
-          <button onclick="exportarSIIGO()" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Exportar Datos SIIGO</button>
-        </div>
-        <table class="w-full border rounded bg-white mt-4">
-          <thead class="bg-gray-800 text-white">
-            <tr><th class="p-2 text-left">Cliente</th><th class="text-left">Concepto</th><th class="text-left">Valor</th><th class="text-left">Estado</th></tr>
-          </thead>
-          <tbody id="tablaFacturas"></tbody>
-        </table>
       </div>
     </section>
-
-    <section id="dashboard" class="module hidden">
-      <h1 class="text-3xl font-bold mb-6">Dashboard Financiero</h1>
-      <div class="bg-white/95 backdrop-blur-sm p-6 rounded-2xl shadow-md">
-        <canvas id="financeChart"></canvas>
-      </div>
-    </section>
-
-    <section id="reportes" class="module hidden"><h1 class="text-3xl font-bold mb-6">Reportes Mensuales</h1></section>
-    <section id="staff" class="module hidden"><h1 class="text-3xl font-bold mb-6">Gestión de Staff</h1></section>
-    <section id="checkin" class="module hidden"><h1 class="text-3xl font-bold mb-6">Check-In Digital</h1></section>
 
   </main>
 </div>
 
 <script>
-// --- INICIALIZACIÓN DE DATOS ---
-let reservas = JSON.parse(localStorage.getItem('reservas')) || [];
-let facturas = JSON.parse(localStorage.getItem('facturas')) || [];
+// --- CORE LOGIC ---
+let db = {
+  caja: JSON.parse(localStorage.getItem('caja')) || [],
+  reservas: JSON.parse(localStorage.getItem('reservas')) || [],
+  inventario: JSON.parse(localStorage.getItem('inventario')) || [],
+  staff: JSON.parse(localStorage.getItem('staff')) || []
+};
 
-// --- FUNCIÓN DE NAVEGACIÓN ---
 function showModule(id) {
-  document.querySelectorAll('.module').forEach(section => section.classList.add('hidden'));
-  const target = document.getElementById(id);
-  if (target) target.classList.remove('hidden');
+  document.querySelectorAll('.module').forEach(m => m.classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');
 }
 
-// --- GESTIÓN DE RESERVAS ---
+// --- LOGICA CAJA MENOR ---
+function registrarCaja() {
+  const monto = parseFloat(document.getElementById('caja-monto').value);
+  const tipo = document.getElementById('caja-tipo').value;
+  const desc = document.getElementById('caja-desc').value;
+
+  if(!monto || !desc) return alert("Completa los datos de caja");
+
+  const item = { fecha: new Date().toLocaleString(), desc, tipo, monto };
+  db.caja.push(item);
+  localStorage.setItem('caja', JSON.stringify(db.caja));
+  renderCaja();
+}
+
+function renderCaja() {
+  const tabla = document.getElementById('tablaCaja');
+  let saldo = 0;
+  tabla.innerHTML = '';
+  
+  db.caja.forEach(i => {
+    if(i.tipo === 'ingreso' || i.tipo === 'apertura') saldo += i.monto;
+    else saldo -= i.monto;
+
+    tabla.innerHTML += `<tr class="border-b text-sm">
+      <td class="p-3">${i.fecha}</td>
+      <td>${i.desc}</td>
+      <td class="capitalize font-bold ${i.tipo==='gasto'?'text-red-500':'text-green-600'}">${i.tipo}</td>
+      <td>$${i.monto.toLocaleString()}</td>
+    </tr>`;
+  });
+  document.getElementById('saldo-total').innerText = `$${saldo.toLocaleString()}`;
+}
+
+// --- LOGICA RESERVAS ---
+function toggleDatafono(val) {
+  const div = document.getElementById('div-aprobacion');
+  val === 'Datafono' ? div.classList.remove('hidden') : div.classList.add('hidden');
+}
+
 function guardarReserva() {
   const reserva = {
-    cliente: document.getElementById('cliente').value,
-    documento: document.getElementById('documento').value,
-    contacto: document.getElementById('contacto').value,
-    habitacion: document.getElementById('habitacion').value,
-    plataforma: document.getElementById('plataforma').value,
-    valor: document.getElementById('valor').value,
-    metodo: document.getElementById('metodo').value,
+    cliente: document.getElementById('res-cliente').value,
+    habitacion: document.getElementById('res-habitacion').value,
+    checkin: document.getElementById('res-checkin').value,
+    metodo: document.getElementById('res-metodo').value,
+    aprobacion: document.getElementById('res-aprobacion').value || 'N/A'
   };
-
-  if (!reserva.cliente) return alert("Ingresa el nombre del cliente");
-
-  reservas.push(reserva);
-  localStorage.setItem('reservas', JSON.stringify(reservas));
+  db.reservas.push(reserva);
+  localStorage.setItem('reservas', JSON.stringify(db.reservas));
   renderReservas();
-  document.querySelectorAll('#reservas input').forEach(i => i.value = '');
 }
 
 function renderReservas() {
   const tabla = document.getElementById('tablaReservas');
-  if (!tabla) return;
   tabla.innerHTML = '';
-  reservas.forEach(r => {
-    tabla.innerHTML += `<tr class="border-b"><td class="p-3">${r.cliente}</td><td>${r.plataforma}</td><td>${r.habitacion}</td><td>$${r.valor}</td><td>${r.metodo}</td></tr>`;
+  db.reservas.forEach(r => {
+    tabla.innerHTML += `<tr class="border-b"><td class="p-3">${r.cliente}</td><td>${r.habitacion}</td><td>${r.checkin}</td><td>${r.metodo}</td><td>${r.aprobacion}</td></tr>`;
   });
 }
 
-// --- GESTIÓN DE FACTURACIÓN ---
-function exportarSIIGO() {
-  const factura = {
-    nombre: document.getElementById('fact_nombre').value,
-    concepto: document.getElementById('fact_concepto').value,
-    valor: document.getElementById('fact_valor').value,
-    estado: document.getElementById('fact_estado').value,
-  };
-
-  if (!factura.nombre) return alert("Ingresa el nombre");
-
-  facturas.push(factura);
-  localStorage.setItem('facturas', JSON.stringify(facturas));
-  renderFacturas();
-
-  const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(factura, null, 2));
-  const downloadAnchorNode = document.createElement('a');
-  downloadAnchorNode.setAttribute('href', dataStr);
-  downloadAnchorNode.setAttribute('download', `factura_${factura.nombre}.json`);
-  document.body.appendChild(downloadAnchorNode);
-  downloadAnchorNode.click();
-  downloadAnchorNode.remove();
+// --- LOGICA INVENTARIO ---
+function agregarInventario() {
+  const item = { nombre: document.getElementById('inv-item').value, stock: document.getElementById('inv-stock').value };
+  db.inventario.push(item);
+  localStorage.setItem('inventario', JSON.stringify(db.inventario));
+  renderInventario();
 }
 
-function renderFacturas() {
-  const tabla = document.getElementById('tablaFacturas');
-  if (!tabla) return;
-  tabla.innerHTML = '';
-  facturas.forEach(f => {
-    tabla.innerHTML += `<tr class="border-b"><td class="p-2">${f.nombre}</td><td>${f.concepto}</td><td>$${f.valor}</td><td>${f.estado}</td></tr>`;
+function renderInventario() {
+  const container = document.getElementById('lista-inventario');
+  container.innerHTML = '';
+  db.inventario.forEach(i => {
+    container.innerHTML += `<div class="bg-white p-4 rounded shadow border-b-2 border-blue-400">
+      <p class="font-bold">${i.nombre}</p>
+      <p class="text-2xl">${i.stock} <span class="text-xs text-gray-400">Unds</span></p>
+    </div>`;
   });
 }
 
-// --- CARGA INICIAL ---
+// --- LOGICA STAFF ---
+function agregarStaff() {
+  const s = { nombre: document.getElementById('staff-nombre').value, rol: document.getElementById('staff-rol').value };
+  db.staff.push(s);
+  localStorage.setItem('staff', JSON.stringify(db.staff));
+  renderStaff();
+}
+
+function renderStaff() {
+  const container = document.getElementById('lista-staff');
+  container.innerHTML = '';
+  db.staff.forEach(s => {
+    container.innerHTML += `<div class="bg-gray-200 p-2 rounded flex justify-between"><span>${s.nombre}</span><span class="text-xs font-bold uppercase">${s.rol}</span></div>`;
+  });
+}
+
+// Inicialización
 window.onload = () => {
+  renderCaja();
   renderReservas();
-  renderFacturas();
-  const ctx = document.getElementById('financeChart');
-  if (ctx) {
-    new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: ['Reservas', 'Bar', 'Gastos'],
-        datasets: [{
-          label: 'Flujo ($ COP)',
-          data: [1200000, 450000, 600000],
-          backgroundColor: ['#fbbf24', '#000000', '#ef4444']
-        }]
-      }
-    });
-  }
+  renderInventario();
+  renderStaff();
 };
 </script>
 
 </body>
 </html>
-"""
-
-with open("index.html", "w", encoding="utf-8") as f:
-    f.write(html_content)
