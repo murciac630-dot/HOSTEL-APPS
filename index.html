@@ -3,17 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>La Clave Hostel | ERP Operativo</title>
+  <title>La Clave Hostel | ERP Operativo Pro</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     .module { transition: all 0.3s ease; }
     .hidden { display: none !important; }
-    input, select, textarea { border: 1px solid #d1d5db; padding: 0.6rem; border-radius: 0.5rem; width: 100%; outline: none; background-color: white; }
-    input:focus { border-color: #000; ring: 1px solid #000; }
-    label { font-size: 10px; text-transform: uppercase; font-weight: 800; color: #6b7280; margin-left: 4px; margin-bottom: 2px; display: block; }
+    input, select, textarea { border: 1px solid #d1d5db; padding: 0.6rem; border-radius: 0.5rem; width: 100%; outline: none; background-color: white; font-size: 14px; }
+    input:focus { border-color: #000; box-shadow: 0 0 0 1px #000; }
+    label { font-size: 10px; text-transform: uppercase; font-weight: 800; color: #4b5563; margin-left: 4px; margin-bottom: 2px; display: block; }
+    th { text-transform: uppercase; font-size: 11px; letter-spacing: 0.05em; }
   </style>
 </head>
-<body class="bg-gray-100 min-h-screen text-gray-800">
+<body class="bg-gray-100 min-h-screen text-gray-900">
 
 <div class="fixed inset-0 flex items-center justify-center pointer-events-none opacity-5 z-0">
   <img src="LC Logo IG-FB ProfilePic.png" alt="" class="max-w-2xl w-2/3 object-contain">
@@ -21,13 +22,12 @@
 
 <div class="flex relative z-10">
   <aside class="w-64 bg-black text-white min-h-screen p-6 fixed shadow-2xl overflow-y-auto">
-    <img src="LC Logo IG-FB ProfilePic.png" alt="Logo" class="w-32 mx-auto mb-6 rounded-lg border border-gray-800 bg-white/10 p-2">
+    <img src="LC Logo IG-FB ProfilePic.png" alt="Logo" class="w-28 mx-auto mb-6 rounded-lg bg-white/10 p-2">
     <nav class="space-y-2">
-      <button onclick="showModule('caja-menor')" class="w-full text-left p-3 hover:bg-gray-800 rounded transition text-sm">💰 Caja Menor</button>
-      <button onclick="showModule('reservas')" class="w-full text-left p-3 hover:bg-gray-800 rounded transition text-sm">📅 Reservas</button>
-      <button onclick="showModule('inventario')" class="w-full text-left p-3 hover:bg-gray-800 rounded transition text-sm">📦 Inventario</button>
-      <button onclick="showModule('staff')" class="w-full text-left p-3 hover:bg-gray-800 rounded transition text-sm">👥 Staff</button>
-      <button onclick="showModule('checkin')" class="w-full text-left p-3 hover:bg-gray-800 rounded transition text-sm">📝 Check-In Digital</button>
+      <button onclick="showModule('caja-menor')" class="w-full text-left p-3 hover:bg-gray-800 rounded transition text-sm font-medium">💰 Caja Menor</button>
+      <button onclick="showModule('reservas')" class="w-full text-left p-3 hover:bg-gray-800 rounded transition text-sm font-medium">📅 Reservas</button>
+      <button onclick="showModule('inventario')" class="w-full text-left p-3 hover:bg-gray-800 rounded transition text-sm font-medium">📦 Inventario</button>
+      <button onclick="showModule('staff')" class="w-full text-left p-3 hover:bg-gray-800 rounded transition text-sm font-medium">👥 Staff</button>
     </nav>
   </aside>
 
@@ -35,139 +35,127 @@
 
     <section id="caja-menor" class="module">
       <div class="flex justify-between items-center mb-8">
-        <h1 class="text-3xl font-black">Caja Menor</h1>
-        <button onclick="generarCuadre()" class="bg-blue-600 text-white px-6 py-2 rounded-lg font-bold hover:bg-blue-700">Generar Cuadre</button>
+        <h1 class="text-3xl font-black italic">CAJA MENOR</h1>
+        <button onclick="generarCuadre()" class="bg-blue-600 text-white px-6 py-2 rounded-lg font-bold hover:bg-blue-700 transition shadow-lg">Generar Cuadre</button>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 text-center">
         <div class="bg-white p-6 rounded-2xl shadow-sm border-b-4 border-green-500">
-          <label>Saldo en Libros</label>
+          <label>Saldo Disponible (Sistema)</label>
           <p id="saldo-total" class="text-4xl font-black text-green-600">$0</p>
         </div>
-        <div class="bg-white p-6 rounded-2xl shadow-sm border-b-4 border-black font-mono text-sm italic flex items-center">
-          <p id="estado-turno">Inicie turno con un "Saldo Inicial"</p>
+        <div class="bg-white p-6 rounded-2xl shadow-sm border-b-4 border-black flex flex-col justify-center">
+          <label>Estado de Turno</label>
+          <p id="estado-turno" class="text-sm font-mono text-gray-500 italic">No se ha registrado apertura</p>
         </div>
       </div>
 
       <div class="bg-white p-6 rounded-2xl shadow-md mb-8">
         <div class="grid md:grid-cols-4 gap-4">
-          <div><label>Monto</label><input id="caja-monto" type="number"></div>
+          <div><label>Monto</label><input id="caja-monto" type="number" placeholder="0"></div>
           <div><label>Tipo</label>
             <select id="caja-tipo">
-              <option value="apertura">Saldo Inicial (Apertura)</option>
+              <option value="apertura">Saldo Inicial</option>
               <option value="ingreso">Ingreso</option>
-              <option value="gasto">Gasto / Pago</option>
+              <option value="gasto">Gasto / Egreso</option>
             </select>
           </div>
-          <div><label>Descripción</label><input id="caja-desc" type="text" placeholder="Ej: Venta cerveza"></div>
-          <div class="flex items-end"><button onclick="registrarCaja()" class="w-full bg-black text-white p-2.5 rounded-lg font-bold">Registrar</button></div>
+          <div><label>Descripción</label><input id="caja-desc" type="text" placeholder="Ej: Compra de café"></div>
+          <div class="flex items-end"><button onclick="registrarCaja()" class="w-full bg-black text-white p-2.5 rounded-lg font-bold hover:bg-gray-800 transition">Registrar Pago</button></div>
         </div>
       </div>
 
-      <table class="w-full bg-white rounded-2xl shadow-md overflow-hidden text-sm">
-        <thead class="bg-gray-50 text-gray-500">
-          <tr><th class="p-4 text-left">Hora</th><th class="p-4 text-left">Descripción</th><th class="p-4 text-left">Tipo</th><th class="p-4 text-right">Valor</th></tr>
+      <table class="w-full bg-white rounded-2xl shadow-md overflow-hidden">
+        <thead class="bg-gray-50 text-gray-500 border-b">
+          <tr><th class="p-4 text-left">Hora</th><th class="p-4 text-left">Descripción</th><th class="p-4 text-left">Tipo</th><th class="p-4 text-right">Monto</th></tr>
         </thead>
-        <tbody id="tablaCaja"></tbody>
+        <tbody id="tablaCaja" class="text-sm"></tbody>
       </table>
     </section>
 
     <section id="reservas" class="module hidden">
-      <h1 class="text-3xl font-black mb-8">Registro de Reservas</h1>
-      <div class="bg-white p-6 rounded-2xl shadow-md mb-8 grid md:grid-cols-3 gap-4">
-        <div><label>Nombre del Huésped</label><input id="res-cliente"></div>
-        <div><label>Habitación</label><input id="res-habitacion"></div>
-        <div><label>Fecha Check-In</label><input id="res-checkin" type="date"></div>
-        <div><label>Plataforma / Canal</label>
-          <select id="res-plataforma">
-            <option>Booking</option><option>Airbnb</option><option>Hostelworld</option><option>Directa</option><option>Walk-in</option>
-          </select>
-        </div>
-        <div><label>Medio de Pago</label>
-          <select id="res-metodo" onchange="toggleDatafono(this.value)">
-            <option value="Efectivo">Efectivo</option>
-            <option value="Transferencia">Transferencia</option>
-            <option value="Datafono">Datáfono</option>
-          </select>
-        </div>
-        <div id="div-aprobacion" class="hidden">
-          <label>Código de Aprobación</label>
-          <input id="res-aprobacion" placeholder="000000">
-        </div>
-        <div><label>Valor Pagado</label><input id="res-valor" type="number"></div>
-        <div class="md:col-span-3">
-          <button onclick="guardarReserva()" class="w-full bg-black text-white p-3 rounded-lg font-bold hover:bg-gray-800">Guardar Reserva</button>
+      <h1 class="text-3xl font-black italic mb-8">RESERVAS & PAGOS</h1>
+      <div class="bg-white p-6 rounded-2xl shadow-md mb-8">
+        <div class="grid md:grid-cols-3 gap-6">
+          <div><label>Huésped</label><input id="res-cliente" placeholder="Nombre completo"></div>
+          <div><label>Habitación / Cama</label><input id="res-habitacion" placeholder="Ej: Hab 102"></div>
+          <div><label>Check-In</label><input id="res-checkin" type="date"></div>
+          
+          <div><label>Ciudad de Origen</label><input id="res-origen" placeholder="¿De dónde viene?"></div>
+          <div><label>Próxima Ciudad</label><input id="res-proxima" placeholder="¿A dónde se dirige?"></div>
+          <div><label>Canal de Venta</label>
+            <select id="res-plataforma">
+              <option>Directo / WhatsApp</option><option>Airbnb</option><option>Booking</option><option>Hostelworld</option><option>Walk-in</option>
+            </select>
+          </div>
+
+          <div><label>Medio de Pago</label>
+            <select id="res-metodo" onchange="toggleDatafono(this.value)">
+              <option value="Efectivo">Efectivo</option>
+              <option value="Transferencia">Transferencia</option>
+              <option value="Datafono">Datáfono</option>
+            </select>
+          </div>
+          <div id="campo-email" class="hidden"><label>Email del Cliente (Requerido Datáfono)</label><input id="res-email" type="email" placeholder="cliente@ejemplo.com"></div>
+          <div id="campo-aprobacion" class="hidden"><label>Código de Aprobación</label><input id="res-aprobacion" placeholder="6 dígitos"></div>
+          
+          <div><label>Valor Total Pagado</label><input id="res-valor" type="number" placeholder="0"></div>
+          
+          <div class="md:col-span-3 pt-4 border-t">
+            <button onclick="guardarReserva()" class="w-full bg-black text-white p-4 rounded-xl font-black uppercase tracking-wider hover:bg-gray-800 transition">Confirmar y Guardar Registro</button>
+          </div>
         </div>
       </div>
 
-      <table class="w-full bg-white rounded-2xl shadow-md overflow-hidden text-sm">
-        <thead class="bg-black text-white">
-          <tr><th class="p-4 text-left">Huésped</th><th class="p-4 text-left">Canal</th><th class="p-4 text-left">Pago</th><th class="p-4 text-left">Cód. Aprob.</th><th class="p-4 text-right">Total</th></tr>
-        </thead>
-        <tbody id="tablaReservas"></tbody>
-      </table>
-    </section>
-
-    <section id="checkin" class="module hidden">
-      <div class="max-w-3xl mx-auto bg-white p-8 rounded-3xl shadow-2xl border-t-8 border-black">
-        <h1 class="text-2xl font-black mb-6 uppercase text-center">Registro de Huésped</h1>
-        <div class="grid md:grid-cols-2 gap-4 text-left">
-          <div class="md:col-span-2"><label>Nombre Completo</label><input type="text"></div>
-          <div><label>E-mail del Cliente</label><input type="email" placeholder="cliente@correo.com"></div>
-          <div><label>Número de ID / Pasaporte</label><input type="text"></div>
-          <div><label>Ciudad de Origen</label><input type="text" placeholder="Ej: Bogotá"></div>
-          <div><label>Próxima ciudad a visitar</label><input type="text" placeholder="Ej: Medellín"></div>
-          <div><label>Nacionalidad</label><input type="text"></div>
-          <div class="md:col-span-2"><label>Observaciones de Salud / Alergias</label><textarea rows="2"></textarea></div>
-          <button class="md:col-span-2 bg-black text-white p-4 rounded-xl font-black tracking-widest mt-4 uppercase">Firmar y Registrar</button>
-        </div>
+      <div class="overflow-x-auto bg-white rounded-2xl shadow-md">
+        <table class="w-full text-sm text-left">
+          <thead class="bg-black text-white">
+            <tr>
+              <th class="p-4">Huésped</th>
+              <th class="p-4">Origen / Próxima</th>
+              <th class="p-4">Pago / Cód.</th>
+              <th class="p-4">Email</th>
+              <th class="p-4 text-right">Total</th>
+            </tr>
+          </thead>
+          <tbody id="tablaReservas"></tbody>
+        </table>
       </div>
     </section>
 
-    <section id="inventario" class="module hidden">
-      <h1 class="text-3xl font-black mb-8">Inventario Bar & Recepción</h1>
-      <div class="bg-white p-6 rounded-2xl shadow-md mb-8 grid md:grid-cols-3 gap-4">
-        <input id="inv-item" placeholder="Producto">
-        <input id="inv-stock" type="number" placeholder="Stock">
-        <button onclick="registrarInventario()" class="bg-black text-white rounded-lg font-bold">Añadir</button>
-      </div>
-      <div id="lista-inventario" class="grid grid-cols-2 md:grid-cols-4 gap-4"></div>
-    </section>
-
-    <section id="staff" class="module hidden">
-      <h1 class="text-3xl font-black mb-8">Staff & Voluntarios</h1>
-      <div class="bg-white p-6 rounded-2xl shadow-md mb-8 grid md:grid-cols-3 gap-4">
-        <input id="staff-nombre" placeholder="Nombre">
-        <input id="staff-rol" placeholder="Cargo">
-        <button onclick="registrarStaff()" class="bg-black text-white rounded-lg font-bold">Registrar</button>
-      </div>
-      <div id="lista-staff" class="space-y-2"></div>
-    </section>
+    <section id="inventario" class="module hidden"><h1 class="text-3xl font-black mb-8 italic">INVENTARIO</h1><div id="lista-inventario" class="grid grid-cols-2 md:grid-cols-4 gap-4"></div></section>
+    <section id="staff" class="module hidden"><h1 class="text-3xl font-black mb-8 italic">STAFF</h1><div id="lista-staff" class="space-y-2"></div></section>
 
   </main>
 </div>
 
 <script>
+// Base de datos local para persistencia
 let db = {
   caja: JSON.parse(localStorage.getItem('lc_caja')) || [],
-  reservas: JSON.parse(localStorage.getItem('lc_reservas')) || [],
-  inventario: JSON.parse(localStorage.getItem('lc_inv')) || [],
-  staff: JSON.parse(localStorage.getItem('lc_staff')) || []
+  reservas: JSON.parse(localStorage.getItem('lc_reservas')) || []
 };
 
+// Navegación entre módulos
 function showModule(id) {
   document.querySelectorAll('.module').forEach(m => m.classList.add('hidden'));
   document.getElementById(id).classList.remove('hidden');
 }
 
-// CAJA
+// LÓGICA DE CAJA MENOR CON HORA
 function registrarCaja() {
   const monto = parseFloat(document.getElementById('caja-monto').value);
   const tipo = document.getElementById('caja-tipo').value;
   const desc = document.getElementById('caja-desc').value;
-  if(!monto || !desc) return alert("Faltan datos");
+  if(!monto || !desc) return alert("Error: Llena todos los campos de caja.");
 
-  db.caja.push({ id: Date.now(), hora: new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}), desc, tipo, monto });
+  const registro = {
+    id: Date.now(),
+    hora: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+    desc, tipo, monto
+  };
+
+  db.caja.push(registro);
   localStorage.setItem('lc_caja', JSON.stringify(db.caja));
   renderCaja();
 }
@@ -179,66 +167,74 @@ function renderCaja() {
   db.caja.slice().reverse().forEach(i => {
     if(i.tipo === 'ingreso' || i.tipo === 'apertura') saldo += i.monto;
     else saldo -= i.monto;
-    t.innerHTML += `<tr class="border-b"><td class="p-4 font-bold">${i.hora}</td><td>${i.desc}</td><td class="uppercase text-[9px] font-black ${i.tipo==='gasto'?'text-red-500':'text-green-500'}">${i.tipo}</td><td class="p-4 text-right font-bold">$${i.monto.toLocaleString()}</td></tr>`;
+    t.innerHTML += `<tr class="border-b"><td class="p-4 font-bold text-gray-500">${i.hora}</td><td class="p-4">${i.desc}</td><td class="p-4 font-black uppercase text-[9px] ${i.tipo==='gasto'?'text-red-500':'text-green-600'}">${i.tipo}</td><td class="p-4 text-right font-bold">$${i.monto.toLocaleString()}</td></tr>`;
   });
   document.getElementById('saldo-total').innerText = `$${saldo.toLocaleString()}`;
+  if(db.caja.length > 0) document.getElementById('estado-turno').innerText = "Turno Activo";
 }
 
+// CUADRE DE CAJA (SEGURIDAD Y ESCALABILIDAD)
 function generarCuadre() {
   const sistema = parseFloat(document.getElementById('saldo-total').innerText.replace(/[^0-9.-]+/g,""));
-  const real = parseFloat(prompt("Dinero físico en caja:"));
+  const real = parseFloat(prompt("CUADRE: Ingrese dinero físico contado en caja:"));
   if(isNaN(real)) return;
-  alert(`Sistema: $${sistema.toLocaleString()}\nFísico: $${real.toLocaleString()}\n\nDiferencia: $${(real-sistema).toLocaleString()}`);
+  const diff = real - sistema;
+  alert(`REPORTE:\nSistema: $${sistema.toLocaleString()}\nFísico: $${real.toLocaleString()}\n\nDiferencia: $${diff.toLocaleString()}\n\n${diff === 0 ? 'CAJA CUADRADA CORRECTAMENTE' : 'REVISAR MOVIMIENTOS'}`);
 }
 
-// RESERVAS (Lógica Datáfono)
+// LÓGICA DE RESERVAS (TUS PETICIONES)
 function toggleDatafono(val) {
-  document.getElementById('div-aprobacion').classList.toggle('hidden', val !== 'Datafono');
+  // Muestra u oculta los campos si el pago es Datáfono
+  const emailDiv = document.getElementById('campo-email');
+  const aprobDiv = document.getElementById('campo-aprobacion');
+  if (val === 'Datafono') {
+    emailDiv.classList.remove('hidden');
+    aprobDiv.classList.remove('hidden');
+  } else {
+    emailDiv.classList.add('hidden');
+    aprobDiv.classList.add('hidden');
+  }
 }
 
 function guardarReserva() {
-  const r = {
+  const res = {
     cliente: document.getElementById('res-cliente').value,
-    canal: document.getElementById('res-plataforma').value,
+    origen: document.getElementById('res-origen').value,
+    proxima: document.getElementById('res-proxima').value,
     metodo: document.getElementById('res-metodo').value,
+    email: document.getElementById('res-email').value || 'N/A',
     cod: document.getElementById('res-aprobacion').value || 'N/A',
     valor: document.getElementById('res-valor').value
   };
-  db.reservas.push(r);
+
+  if(!res.cliente || !res.valor) return alert("Nombre y Valor son obligatorios.");
+
+  db.reservas.push(res);
   localStorage.setItem('lc_reservas', JSON.stringify(db.reservas));
   renderReservas();
+  
+  // Limpiar campos después de guardar
+  document.querySelectorAll('#reservas input').forEach(input => input.value = '');
+  toggleDatafono('Efectivo');
 }
 
 function renderReservas() {
   const t = document.getElementById('tablaReservas');
   t.innerHTML = '';
   db.reservas.forEach(r => {
-    t.innerHTML += `<tr class="border-b"><td class="p-4 font-bold">${r.cliente}</td><td>${r.canal}</td><td>${r.metodo}</td><td>${r.cod}</td><td class="p-4 text-right font-bold">$${Number(r.valor).toLocaleString()}</td></tr>`;
+    t.innerHTML += `
+      <tr class="border-b hover:bg-gray-50">
+        <td class="p-4"><span class="font-bold">${r.cliente}</span></td>
+        <td class="p-4 text-xs text-gray-500">${r.origen} ➡️ ${r.proxima}</td>
+        <td class="p-4"><b>${r.metodo}</b><br><span class="text-[10px] text-gray-400">Cód: ${r.cod}</span></td>
+        <td class="p-4 text-xs italic">${r.email}</td>
+        <td class="p-4 text-right font-bold text-green-600">$${Number(r.valor).toLocaleString()}</td>
+      </tr>
+    `;
   });
 }
 
-// INVENTARIO Y STAFF
-function registrarInventario() {
-  db.inventario.push({ n: document.getElementById('inv-item').value, s: document.getElementById('inv-stock').value });
-  localStorage.setItem('lc_inv', JSON.stringify(db.inventario));
-  renderInv();
-}
-function renderInv() {
-  const l = document.getElementById('lista-inventario'); l.innerHTML = '';
-  db.inventario.forEach(i => l.innerHTML += `<div class="bg-white p-4 rounded-xl border"><b>${i.n}</b><br>${i.s} UND</div>`);
-}
-
-function registrarStaff() {
-  db.staff.push({ n: document.getElementById('staff-nombre').value, r: document.getElementById('staff-rol').value });
-  localStorage.setItem('lc_staff', JSON.stringify(db.staff));
-  renderStaff();
-}
-function renderStaff() {
-  const l = document.getElementById('lista-staff'); l.innerHTML = '';
-  db.staff.forEach(s => l.innerHTML += `<div class="bg-white p-3 rounded-lg border flex justify-between"><b>${s.n}</b><span>${s.r}</span></div>`);
-}
-
-window.onload = () => { renderCaja(); renderReservas(); renderInv(); renderStaff(); };
+window.onload = () => { renderCaja(); renderReservas(); };
 </script>
 </body>
 </html>
