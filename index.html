@@ -83,7 +83,8 @@
           
           <div><label>Ciudad de Origen</label><input id="res-origen" placeholder="¿De dónde viene?"></div>
           <div><label>Próxima Ciudad</label><input id="res-proxima" placeholder="¿A dónde se dirige?"></div>
-          <div id="campo-email" class="hidden"><label>Email del Cliente (Requerido Datáfono)</label><input id="res-email" type="email" placeholder="cliente@ejemplo.com"></div>
+          <div><label>N° Contacto</label><input id="res-whatsapp" placeholder="Whatsapp"></div>
+          <div id="campo-email" class="hidden"><label>Email del Cliente</label><input id="res-email" type="email" placeholder="cliente@ejemplo.com"></div>
           <div><label>Plataforma de Reserva</label>
             <select id="res-plataforma">
               <option>Directo / WhatsApp</option><option>Airbnb</option><option>Booking</option><option>Hostelworld</option>
@@ -115,6 +116,7 @@
               <th class="p-4">Origen / Próxima</th>
               <th class="p-4">Pago / Cód.</th>
               <th class="p-4">Email</th>
+              <th class="p-4">Whatsapp</th>
               <th class="p-4 text-right">Total</th>
             </tr>
           </thead>
@@ -185,7 +187,6 @@ function generarCuadre() {
 // LÓGICA DE RESERVAS (TUS PETICIONES)
 function toggleDatafono(val) {
   // Muestra u oculta los campos si el pago es Datáfono
-  const emailDiv = document.getElementById('campo-email');
   const aprobDiv = document.getElementById('campo-aprobacion');
   if (val === 'Datafono') {
     emailDiv.classList.remove('hidden');
@@ -202,7 +203,9 @@ function guardarReserva() {
     origen: document.getElementById('res-origen').value,
     proxima: document.getElementById('res-proxima').value,
     metodo: document.getElementById('res-metodo').value,
-    email: document.getElementById('res-email').value || 'N/A',
+    metodo: document.getElementById('res-whatsapp').value,
+    email: document.getElementById('res-email').value,
+    
     cod: document.getElementById('res-aprobacion').value || 'N/A',
     valor: document.getElementById('res-valor').value
   };
