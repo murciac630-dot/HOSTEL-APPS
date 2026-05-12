@@ -3,134 +3,138 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>La Clave Hostel | ERP V2.0 Professional</title>
+  <title>La Clave Hostel | ERP Profesional</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     .module { transition: all 0.3s ease; }
     .hidden { display: none !important; }
-    input, select { border: 1px solid #d1d5db; padding: 0.5rem; border-radius: 0.375rem; width: 100%; }
+    input, select, textarea { border: 1px solid #d1d5db; padding: 0.5rem; border-radius: 0.375rem; width: 100%; font-size: 0.875rem; }
+    .bg-logo {
+      fixed inset-0 flex items-center justify-center pointer-events-none opacity-5 z-0;
+    }
   </style>
 </head>
 <body class="bg-gray-100 min-h-screen text-gray-800">
 
-<div class="flex">
-  <aside class="w-72 bg-black text-white min-h-screen p-6 space-y-4 fixed shadow-2xl">
-    <div class="text-2xl font-bold border-b border-gray-700 pb-4 mb-6">La Clave ERP</div>
-    <nav class="space-y-2 text-sm">
-      <button onclick="showModule('caja-menor')" class="w-full text-left p-2 hover:bg-gray-800 rounded">💰 Caja Menor</button>
-      <button onclick="showModule('reservas')" class="w-full text-left p-2 hover:bg-gray-800 rounded">📅 Reservas</button>
-      <button onclick="showModule('inventario')" class="w-full text-left p-2 hover:bg-gray-800 rounded">📦 Inventario</button>
-      <button onclick="showModule('gastos')" class="w-full text-left p-2 hover:bg-gray-800 rounded">💸 Gastos Operativos</button>
-      <button onclick="showModule('staff')" class="w-full text-left p-2 hover:bg-gray-800 rounded">👥 Staff & Voluntarios</button>
-      <button onclick="showModule('checkin')" class="w-full text-left p-2 hover:bg-gray-800 rounded">📝 Check-In Digital</button>
-      <button onclick="showModule('dashboard')" class="w-full text-left p-2 hover:bg-gray-800 rounded">📊 Dashboard</button>
+<div class="fixed inset-0 flex items-center justify-center pointer-events-none opacity-5 z-0">
+  <img src="LC Logo IG-FB ProfilePic.png" alt="" class="max-w-2xl w-2/3 object-contain">
+</div>
+
+<div class="flex relative z-10">
+  <aside class="w-64 bg-black text-white min-h-screen p-6 fixed shadow-2xl overflow-y-auto">
+    <img src="LC Logo IG-FB ProfilePic.png" alt="Logo" class="w-32 mx-auto mb-6 rounded-lg border border-gray-800">
+    <div class="text-xl font-bold border-b border-gray-700 pb-4 mb-6 text-center">La Clave ERP</div>
+    <nav class="space-y-1">
+      <button onclick="showModule('caja-menor')" class="w-full text-left p-3 hover:bg-gray-800 rounded transition">💰 Caja Menor</button>
+      <button onclick="showModule('reservas')" class="w-full text-left p-3 hover:bg-gray-800 rounded transition">📅 Reservas</button>
+      <button onclick="showModule('inventario')" class="w-full text-left p-3 hover:bg-gray-800 rounded transition">📦 Inventario</button>
+      <button onclick="showModule('gastos')" class="w-full text-left p-3 hover:bg-gray-800 rounded transition">💸 Gastos Operativos</button>
+      <button onclick="showModule('staff')" class="w-full text-left p-3 hover:bg-gray-800 rounded transition">👥 Staff</button>
+      <button onclick="showModule('checkin')" class="w-full text-left p-3 hover:bg-gray-800 rounded transition">📝 Check-In</button>
     </nav>
   </aside>
 
-  <main class="ml-72 flex-1 p-8">
+  <main class="ml-64 flex-1 p-8">
 
     <section id="caja-menor" class="module">
-      <h1 class="text-3xl font-bold mb-6">Manejo de Caja Menor</h1>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+      <div class="flex justify-between items-center mb-6">
+        <h1 class="text-3xl font-bold">Manejo de Caja Menor</h1>
+        <button onclick="generarCuadre()" class="bg-blue-600 text-white px-4 py-2 rounded-lg font-bold hover:bg-blue-700 shadow-lg">⚡ Generar Cuadre de Caja</button>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
         <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-green-500">
-          <p class="text-gray-500 text-sm">Saldo Actual</p>
-          <p id="saldo-total" class="text-2xl font-bold">$0</p>
+          <p class="text-gray-500 text-sm font-semibold uppercase">Saldo en Libros (Esperado)</p>
+          <p id="saldo-total" class="text-3xl font-bold text-green-700">$0</p>
+        </div>
+        <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-black">
+          <p class="text-gray-500 text-sm font-semibold uppercase">Estado de Turno</p>
+          <p id="estado-turno" class="text-lg font-medium text-gray-700 font-mono italic">Esperando apertura...</p>
         </div>
       </div>
       
       <div class="bg-white p-6 rounded-xl shadow-md mb-6">
-        <h2 class="text-lg font-semibold mb-4">Nueva Transacción</h2>
+        <h2 class="text-lg font-semibold mb-4">Registro de Movimiento</h2>
         <div class="grid md:grid-cols-4 gap-4">
-          <input id="caja-monto" type="number" placeholder="Monto">
-          <select id="caja-tipo">
-            <option value="ingreso">Ingreso</option>
-            <option value="gasto">Gasto / Egreso</option>
-            <option value="apertura">Apertura de Turno</option>
-          </select>
-          <input id="caja-desc" type="text" placeholder="Descripción (Ej: Compra Pan)">
-          <button onclick="registrarCaja()" class="bg-green-600 text-white rounded p-2 hover:bg-green-700">Registrar</button>
+          <div>
+            <label class="text-xs text-gray-500 ml-1">Monto (COP)</label>
+            <input id="caja-monto" type="number" placeholder="0.00">
+          </div>
+          <div>
+            <label class="text-xs text-gray-500 ml-1">Tipo de Movimiento</label>
+            <select id="caja-tipo">
+              <option value="apertura">Apertura (Saldo Inicial)</option>
+              <option value="ingreso">Ingreso por Venta/Servicio</option>
+              <option value="gasto">Gasto / Egreso / Pago</option>
+            </select>
+          </div>
+          <div>
+            <label class="text-xs text-gray-500 ml-1">Descripción</label>
+            <input id="caja-desc" type="text" placeholder="Ej: Venta cerveza / Pago pan">
+          </div>
+          <div class="flex items-end">
+            <button onclick="registrarCaja()" class="w-full bg-black text-white rounded p-2.5 font-bold hover:bg-gray-800 transition">Registrar Transacción</button>
+          </div>
         </div>
       </div>
 
-      <table class="w-full bg-white rounded-xl shadow overflow-hidden">
-        <thead class="bg-gray-800 text-white text-sm">
-          <tr><th class="p-3 text-left">Fecha</th><th class="text-left">Descripción</th><th class="text-left">Tipo</th><th class="text-left">Valor</th></tr>
-        </thead>
-        <tbody id="tablaCaja"></tbody>
-      </table>
+      <div class="bg-white rounded-xl shadow-md overflow-hidden">
+        <table class="w-full text-left border-collapse">
+          <thead class="bg-gray-50 text-gray-600 text-xs uppercase font-bold">
+            <tr>
+              <th class="p-4 border-b">Hora / Fecha</th>
+              <th class="p-4 border-b">Concepto</th>
+              <th class="p-4 border-b text-center">Tipo</th>
+              <th class="p-4 border-b text-right">Valor</th>
+            </tr>
+          </thead>
+          <tbody id="tablaCaja" class="text-sm"></tbody>
+        </table>
+      </div>
     </section>
 
     <section id="reservas" class="module hidden">
       <h1 class="text-3xl font-bold mb-6">Gestión de Reservas</h1>
       <div class="bg-white p-6 rounded-xl shadow-md mb-6 grid md:grid-cols-3 gap-4">
-        <input id="res-cliente" placeholder="Nombre Cliente">
-        <input id="res-habitacion" placeholder="Habitación">
-        <input id="res-checkin" type="date">
+        <input id="res-cliente" placeholder="Nombre Huésped">
+        <input id="res-habitacion" placeholder="# Habitación o Cama">
+        <div>
+           <label class="text-xs text-gray-400 block ml-1">Check-In</label>
+           <input id="res-checkin" type="date">
+        </div>
         <select id="res-metodo" onchange="toggleDatafono(this.value)">
           <option value="Efectivo">Efectivo</option>
           <option value="Transferencia">Transferencia</option>
           <option value="Datafono">Datáfono</option>
         </select>
         <div id="div-aprobacion" class="hidden">
-           <input id="res-aprobacion" placeholder="Código de Aprobación">
+           <input id="res-aprobacion" placeholder="Cód. Aprobación Datáfono">
         </div>
-        <input id="res-valor" type="number" placeholder="Valor Total">
-        <button onclick="guardarReserva()" class="bg-black text-white rounded p-2 md:col-span-3 hover:bg-gray-800">Guardar Reserva</button>
+        <input id="res-valor" type="number" placeholder="Valor de Reserva">
+        <button onclick="guardarReserva()" class="bg-black text-white rounded p-2 md:col-span-3 font-bold hover:bg-gray-800 transition">Confirmar Reserva en Sistema</button>
       </div>
 
-      <table class="w-full bg-white rounded-xl shadow overflow-hidden">
+      <table class="w-full bg-white rounded-xl shadow overflow-hidden text-sm">
         <thead class="bg-black text-white">
-          <tr><th class="p-3 text-left">Cliente</th><th class="text-left">Habitación</th><th class="text-left">Check-In</th><th class="text-left">Pago</th><th class="text-left">Aprobación</th></tr>
+          <tr>
+            <th class="p-3 text-left">Huésped</th>
+            <th class="text-left">Hab.</th>
+            <th class="text-left">Check-In</th>
+            <th class="text-left">Pago</th>
+            <th class="text-left">Aprobación</th>
+          </tr>
         </thead>
         <tbody id="tablaReservas"></tbody>
       </table>
     </section>
 
-    <section id="inventario" class="module hidden">
-      <h1 class="text-3xl font-bold mb-6">Inventario Bar / Suministros</h1>
-      <div class="bg-white p-6 rounded-xl shadow-md mb-6 grid md:grid-cols-3 gap-4">
-        <input id="inv-item" placeholder="Producto (Ej: Club Colombia)">
-        <input id="inv-stock" type="number" placeholder="Cantidad">
-        <button onclick="agregarInventario()" class="bg-blue-600 text-white rounded p-2">Actualizar Stock</button>
-      </div>
-      <div id="lista-inventario" class="grid grid-cols-2 md:grid-cols-4 gap-4"></div>
-    </section>
-
-    <section id="staff" class="module hidden">
-      <h1 class="text-3xl font-bold mb-6">Staff & Voluntarios</h1>
-      <div class="bg-white p-6 rounded-xl shadow-md mb-6 grid md:grid-cols-3 gap-4">
-        <input id="staff-nombre" placeholder="Nombre Completo">
-        <input id="staff-rol" placeholder="Rol (Ej: Recepcionista)">
-        <button onclick="agregarStaff()" class="bg-purple-600 text-white rounded p-2">Registrar Personal</button>
-      </div>
-      <div id="lista-staff" class="space-y-2"></div>
-    </section>
-
-    <section id="checkin" class="module hidden">
-      <h1 class="text-3xl font-bold mb-6">Check-In Digital (Huésped)</h1>
-      <div class="bg-white p-8 rounded-2xl shadow-xl max-w-2xl mx-auto border-t-8 border-black">
-        <p class="mb-6 text-gray-600">Bienvenido a La Clave Hostel. Por favor registra tus datos legales.</p>
-        <div class="space-y-4">
-          <input type="text" placeholder="Nombre Completo">
-          <input type="text" placeholder="Número de Pasaporte / ID">
-          <input type="text" placeholder="Nacionalidad">
-          <textarea placeholder="Observaciones de Salud / Alergias" class="w-full border rounded p-2"></textarea>
-          <button class="w-full bg-black text-white p-3 rounded-lg font-bold">FIRMAR Y REGISTRAR</button>
-        </div>
-      </div>
-    </section>
-
-  </main>
+    </main>
 </div>
 
 <script>
-// --- CORE LOGIC ---
 let db = {
   caja: JSON.parse(localStorage.getItem('caja')) || [],
-  reservas: JSON.parse(localStorage.getItem('reservas')) || [],
-  inventario: JSON.parse(localStorage.getItem('inventario')) || [],
-  staff: JSON.parse(localStorage.getItem('staff')) || []
+  reservas: JSON.parse(localStorage.getItem('reservas')) || []
 };
 
 function showModule(id) {
@@ -138,40 +142,94 @@ function showModule(id) {
   document.getElementById(id).classList.remove('hidden');
 }
 
-// --- LOGICA CAJA MENOR ---
+// --- LÓGICA DE CAJA MENOR CON HORA ---
 function registrarCaja() {
   const monto = parseFloat(document.getElementById('caja-monto').value);
   const tipo = document.getElementById('caja-tipo').value;
   const desc = document.getElementById('caja-desc').value;
+  const ahora = new Date();
+  
+  if(!monto || !desc) return alert("Error: El monto y la descripción son obligatorios.");
 
-  if(!monto || !desc) return alert("Completa los datos de caja");
+  const registro = {
+    id: Date.now(),
+    fecha: ahora.toLocaleDateString(),
+    hora: ahora.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+    desc: desc,
+    tipo: tipo,
+    monto: monto
+  };
 
-  const item = { fecha: new Date().toLocaleString(), desc, tipo, monto };
-  db.caja.push(item);
+  db.caja.push(registro);
   localStorage.setItem('caja', JSON.stringify(db.caja));
+  
+  // Limpiar formulario
+  document.getElementById('caja-monto').value = '';
+  document.getElementById('caja-desc').value = '';
+  
   renderCaja();
 }
 
 function renderCaja() {
   const tabla = document.getElementById('tablaCaja');
   let saldo = 0;
+  let ultimaApertura = "No registrada";
   tabla.innerHTML = '';
   
-  db.caja.forEach(i => {
+  // Ordenar por ID (tiempo) para que los últimos salgan arriba
+  db.caja.slice().reverse().forEach(i => {
     if(i.tipo === 'ingreso' || i.tipo === 'apertura') saldo += i.monto;
     else saldo -= i.monto;
 
-    tabla.innerHTML += `<tr class="border-b text-sm">
-      <td class="p-3">${i.fecha}</td>
-      <td>${i.desc}</td>
-      <td class="capitalize font-bold ${i.tipo==='gasto'?'text-red-500':'text-green-600'}">${i.tipo}</td>
-      <td>$${i.monto.toLocaleString()}</td>
-    </tr>`;
+    if(i.tipo === 'apertura') ultimaApertura = `${i.fecha} - ${i.hora}`;
+
+    const colorMonto = (i.tipo === 'gasto') ? 'text-red-600' : 'text-green-600';
+    const signo = (i.tipo === 'gasto') ? '-' : '+';
+
+    tabla.innerHTML += `
+      <tr class="border-b hover:bg-gray-50 transition">
+        <td class="p-4 font-mono text-gray-500">${i.fecha}<br><span class="text-black font-bold">${i.hora}</span></td>
+        <td class="p-4 font-medium">${i.desc}</td>
+        <td class="p-4 text-center">
+          <span class="px-2 py-1 rounded-full text-[10px] font-bold uppercase ${i.tipo==='gasto'?'bg-red-100 text-red-700':'bg-green-100 text-green-700'}">${i.tipo}</span>
+        </td>
+        <td class="p-4 text-right font-bold ${colorMonto}">${signo} $${i.monto.toLocaleString()}</td>
+      </tr>
+    `;
   });
+
   document.getElementById('saldo-total').innerText = `$${saldo.toLocaleString()}`;
+  document.getElementById('estado-turno').innerText = `Última apertura: ${ultimaApertura}`;
 }
 
-// --- LOGICA RESERVAS ---
+// --- FUNCIÓN DE CUADRE DE CAJA ---
+function generarCuadre() {
+  const saldoLibros = parseFloat(document.getElementById('saldo-total').innerText.replace(/[^0-9.-]+/g,""));
+  const efectivoReal = prompt("CUADRE DE CAJA\nIngrese el valor total del EFECTIVO FÍSICO que tiene en caja en este momento:");
+  
+  if (efectivoReal === null) return;
+  
+  const real = parseFloat(efectivoReal);
+  if (isNaN(real)) return alert("Error: Debe ingresar un valor numérico.");
+
+  const diferencia = real - saldoLibros;
+  let mensaje = `--- REPORTE DE CUADRE ---\n\n`;
+  mensaje += `Saldo en Libros: $${saldoLibros.toLocaleString()}\n`;
+  mensaje += `Efectivo Físico: $${real.toLocaleString()}\n`;
+  mensaje += `--------------------------\n`;
+  
+  if (diferencia === 0) {
+    mensaje += `✅ CAJA CUADRADA: El valor coincide perfectamente.`;
+  } else if (diferencia > 0) {
+    mensaje += `⚠️ SOBRANTE: Tienes $${diferencia.toLocaleString()} de más en el efectivo.`;
+  } else {
+    mensaje += `❌ FALTANTE: Te faltan $${Math.abs(diferencia).toLocaleString()} en el efectivo físico.`;
+  }
+
+  alert(mensaje);
+}
+
+// --- LÓGICA DE RESERVAS ---
 function toggleDatafono(val) {
   const div = document.getElementById('div-aprobacion');
   val === 'Datafono' ? div.classList.remove('hidden') : div.classList.add('hidden');
@@ -185,6 +243,9 @@ function guardarReserva() {
     metodo: document.getElementById('res-metodo').value,
     aprobacion: document.getElementById('res-aprobacion').value || 'N/A'
   };
+  
+  if(!reserva.cliente) return alert("Ingresa el nombre del huésped");
+  
   db.reservas.push(reserva);
   localStorage.setItem('reservas', JSON.stringify(db.reservas));
   renderReservas();
@@ -198,47 +259,10 @@ function renderReservas() {
   });
 }
 
-// --- LOGICA INVENTARIO ---
-function agregarInventario() {
-  const item = { nombre: document.getElementById('inv-item').value, stock: document.getElementById('inv-stock').value };
-  db.inventario.push(item);
-  localStorage.setItem('inventario', JSON.stringify(db.inventario));
-  renderInventario();
-}
-
-function renderInventario() {
-  const container = document.getElementById('lista-inventario');
-  container.innerHTML = '';
-  db.inventario.forEach(i => {
-    container.innerHTML += `<div class="bg-white p-4 rounded shadow border-b-2 border-blue-400">
-      <p class="font-bold">${i.nombre}</p>
-      <p class="text-2xl">${i.stock} <span class="text-xs text-gray-400">Unds</span></p>
-    </div>`;
-  });
-}
-
-// --- LOGICA STAFF ---
-function agregarStaff() {
-  const s = { nombre: document.getElementById('staff-nombre').value, rol: document.getElementById('staff-rol').value };
-  db.staff.push(s);
-  localStorage.setItem('staff', JSON.stringify(db.staff));
-  renderStaff();
-}
-
-function renderStaff() {
-  const container = document.getElementById('lista-staff');
-  container.innerHTML = '';
-  db.staff.forEach(s => {
-    container.innerHTML += `<div class="bg-gray-200 p-2 rounded flex justify-between"><span>${s.nombre}</span><span class="text-xs font-bold uppercase">${s.rol}</span></div>`;
-  });
-}
-
-// Inicialización
+// Inicialización profesional
 window.onload = () => {
   renderCaja();
   renderReservas();
-  renderInventario();
-  renderStaff();
 };
 </script>
 
